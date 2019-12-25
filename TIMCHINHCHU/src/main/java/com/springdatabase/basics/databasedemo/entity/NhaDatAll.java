@@ -1,5 +1,7 @@
 package com.springdatabase.basics.databasedemo.entity;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,58 +13,70 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "NHA_DAT_All")
-@NamedQuery(name="find_all_NhaDatAll", query = "select nda from NhaDatAll nda")
+@NamedQuery(name = "find_all_NhaDatAll", query = "select nda from NhaDatAll nda")
 public class NhaDatAll {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
-	
+
 	@Column(name = "list_id")
 	private String listId;
-	  
+
 	private boolean owner;
-	
-	private String  subject;
-	
+
+	private String subject;
+
 	@Column(name = "date_upload")
-	private String  dateUpload;
-	
+	private String dateUpload;
+
 	@Column(name = "list_time")
 	private String listTime;
-	
+
 	@Column(name = "account_name")
-	private String  accountName;
-	
+	private String accountName;
+
 	@Lob
 	private String body;
-	  
-	private String  address;
-	
+
+	private String address;
+
 	@Column(name = "ward_name")
-	private String  wardName;
-	
+	private String wardName;
+
 	@Column(name = "area_name")
-	private String  areaName;
-	
+	private String areaName;
+
 	private int region;
 	@Column(name = "region_name")
-	private String  regionName;
-	  
-	private String  price;
-	
+	private String regionName;
+
+	private String price;
+
 	@Column(name = "price_string")
-	private String  priceString;
-	
-	private int  rooms;
-	
+	private String priceString;
+
+	private int rooms;
+
 	@Column(name = "category_name")
-	private String  categoryname;
-	
-	private String  phone;
-	
+	private String categoryname;
+
+	private String phone;
+
 	@Column(name = "type_name")
-	private String  typeName;
+	private String typeName;
+
+	// Dung sort khi get tu db len
+	@Column(name = "date_upload_convert")
+	private Date dateUploadConvert;
+
+	public Date getDateUploadConvert() {
+		return dateUploadConvert;
+	}
+
+	public void setDateUploadConvert(Date dateUploadConvert) {
+		this.dateUploadConvert = dateUploadConvert;
+	}
 
 	public int getId() {
 		return id;
@@ -76,7 +90,6 @@ public class NhaDatAll {
 		return subject;
 	}
 
-	
 	public String getListTime() {
 		return listTime;
 	}
@@ -193,7 +206,6 @@ public class NhaDatAll {
 		this.typeName = typeName;
 	}
 
-	
 	public String getListId() {
 		return listId;
 	}
@@ -202,7 +214,6 @@ public class NhaDatAll {
 		this.listId = listId;
 	}
 
-	
 	public boolean isOwner() {
 		return owner;
 	}
@@ -210,7 +221,7 @@ public class NhaDatAll {
 	public void setOwner(boolean owner) {
 		this.owner = owner;
 	}
-	
+
 	public int getRegion() {
 		return region;
 	}
@@ -219,15 +230,28 @@ public class NhaDatAll {
 		this.region = region;
 	}
 
-	public NhaDatAll(int id, String listId, boolean owner, String subject, String dateUpload, String accountName,
-			String body, String address, String wardName, String areaName, int region, String regionName, String price,
-			String priceString, int rooms, String categoryname, String phone, String typeName, String listTime) {
+	public NhaDatAll() {
+		super();
+	}
+
+	// Dung de so sanh sdt
+
+	public NhaDatAll(String phone) {
+		super();
+		this.phone = phone;
+	}
+
+	public NhaDatAll(int id, String listId, boolean owner, String subject, String dateUpload, String listTime,
+			String accountName, String body, String address, String wardName, String areaName, int region,
+			String regionName, String price, String priceString, int rooms, String categoryname, String phone,
+			String typeName, Date dateUploadConvert) {
 		super();
 		this.id = id;
 		this.listId = listId;
 		this.owner = owner;
 		this.subject = subject;
 		this.dateUpload = dateUpload;
+		this.listTime = listTime;
 		this.accountName = accountName;
 		this.body = body;
 		this.address = address;
@@ -241,27 +265,17 @@ public class NhaDatAll {
 		this.categoryname = categoryname;
 		this.phone = phone;
 		this.typeName = typeName;
-		this.listTime = listTime;
-	}
-
-	public NhaDatAll() {
-		super();
+		this.dateUploadConvert = dateUploadConvert;
 	}
 
 	@Override
 	public String toString() {
 		return "NhaDatAll [id=" + id + ", listId=" + listId + ", owner=" + owner + ", subject=" + subject
-				+ ", dateUpload=" + dateUpload + ", accountName=" + accountName + ", body=" + body + ", address="
-				+ address + ", wardName=" + wardName + ", areaName=" + areaName + ", region=" + region + ", regionName="
-				+ regionName + ", price=" + price + ", priceString=" + priceString + ", rooms=" + rooms
-				+ ", categoryname=" + categoryname + ", phone=" + phone + ", typeName=" + typeName + "]";
+				+ ", dateUpload=" + dateUpload + ", listTime=" + listTime + ", accountName=" + accountName + ", body="
+				+ body + ", address=" + address + ", wardName=" + wardName + ", areaName=" + areaName + ", region="
+				+ region + ", regionName=" + regionName + ", price=" + price + ", priceString=" + priceString
+				+ ", rooms=" + rooms + ", categoryname=" + categoryname + ", phone=" + phone + ", typeName=" + typeName
+				+ ", dateUploadConvert=" + dateUploadConvert + "]";
 	}
-	//Dung de so sanh sdt
 
-	public NhaDatAll(String phone) {
-		super();
-		this.phone = phone;
-	}
-	
-	
 }

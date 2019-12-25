@@ -10,6 +10,7 @@ import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Repository;
 
+import com.springdatabase.basics.databasedemo.entity.NhaDat;
 import com.springdatabase.basics.databasedemo.entity.SDTCO;
 
 @Repository
@@ -19,12 +20,13 @@ public class SDTCOService {
 	@PersistenceContext
 	EntityManager entityManager;
 
+
 	// Get list
 	public List<SDTCO> findAll() {
 		TypedQuery<SDTCO> namedQuery = entityManager.createNamedQuery("find_all_SDTCO", SDTCO.class);
 		return namedQuery.getResultList();
 	}
-
+	
 	public void insert(SDTCO sdtCo) {
 		entityManager.merge(sdtCo);
 

@@ -90,8 +90,8 @@ CREATE TABLE SDT_CO (
   insert into user (user_id, fullname, email, password, confirm_password, role_id)
 			values (2, 'Duong Hao', 'hao@gmail.com','123456','123456',2);
 			
-insert into SDT_CO (phone)
-	values ('0983676415');
+insert into SDT_CO (phone, phan_tram)
+	values ('0983676415',0);
  
 
   

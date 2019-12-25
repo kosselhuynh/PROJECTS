@@ -10,6 +10,7 @@ import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Repository;
 
+import com.springdatabase.basics.databasedemo.entity.Files;
 import com.springdatabase.basics.databasedemo.entity.NhaDat;
 
 @Repository
@@ -60,13 +61,10 @@ public class NhaDatService {
 		return result;
 	}
 	
-//	public int findSDT_DangBai(String sdt) {
-//		List  l;
-//		try {
-//			l = entityManager.createQuery("Select count(nd.id) from NhaDat nd where nd.phone = '"+sdt+"'").getResultList();
-//		}catch (NoResultException e) {
-//			return 0;
-//		}
-//		return l.size();
-//	}
+	public List<NhaDat> findAll_where_Top100() {
+		TypedQuery<NhaDat> namedQuery = entityManager.createQuery("Select f from NhaDat f order by f.dateUploadConvert desc", NhaDat.class);
+		namedQuery.setMaxResults(100);
+		List<NhaDat> resultList = namedQuery.getResultList();
+		return resultList;
+	}
 }

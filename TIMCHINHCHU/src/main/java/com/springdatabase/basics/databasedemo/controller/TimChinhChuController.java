@@ -1,5 +1,11 @@
 package com.springdatabase.basics.databasedemo.controller;
 
+import java.io.BufferedInputStream;
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -7,15 +13,23 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import com.springdatabase.basics.databasedemo.entity.Contact;
 import com.springdatabase.basics.databasedemo.entity.Files;
@@ -49,6 +63,7 @@ public class TimChinhChuController {
 	public String persons(Model model, HttpServletRequest request) {
 		Utils.createtinhTP(tinhTP);
 		model.addAttribute("tinhTP", tinhTP);
+		
 		return "timchinhchu";
 	}
 
@@ -57,6 +72,7 @@ public class TimChinhChuController {
 		if(i < 100) {
 			List<NhaDat> arrayNhaDat = new ArrayList<NhaDat>();
 			arrayNhaDat = nhadatService.findAll_With_RegionName(tinhTP.get(i));
+			model.addAttribute("listTypeName", Utils.createTypeName(arrayNhaDat));
 			model.addAttribute("listAreaName", Utils.createWardName(arrayNhaDat));
 			model.addAttribute("tinhTP", tinhTP);
 			
@@ -64,8 +80,9 @@ public class TimChinhChuController {
 			SDTCO sdtCo = new SDTCO();
 			sdtCo.setPhone("0" + String.valueOf(i));
 			sdtCOService.insert(sdtCo );
+		//	return "redirect:timchinhchu";
 		}
-		
+		model.addAttribute("khuvuc", tinhTP.get(i));
 		return "timchinhchu";
 		
 	}
@@ -74,26 +91,45 @@ public class TimChinhChuController {
 	
 	
 	@GetMapping("actionFormSearch")
-	public String formSearch(@RequestParam("nameSearch") String nameSearch, @RequestParam("catalogy") String catalogy) {
-		nhaDatRestController.nameSearch = StringUtils.trim(nameSearch.toLowerCase());
-		nhaDatRestController.catalogy = StringUtils.trim(catalogy);
-		return "searching";
+	public String formSearch(@RequestParam("tinhthanhpho") String tinhthanhpho, @RequestParam("quanhuyen") String quanhuyen, 
+			@RequestParam("chuyenmuc") String chuyenmuc, @RequestParam("tutimkiem") String tutimkiem) {
+		nhaDatRestController.tinhthanhpho = StringUtils.trim(tinhthanhpho);
+		nhaDatRestController.quanhuyen = StringUtils.trim(quanhuyen);
+		nhaDatRestController.chuyenmuc = StringUtils.trim(chuyenmuc);
+		nhaDatRestController.tutimkiem = StringUtils.trim(tutimkiem.toLowerCase());
+		return "timchinhchu";
 	}
-	
-	
-	
 	
 
-	@GetMapping("trending")
-	public String trending() {
-		return "trending";
-	}
 	
-	@GetMapping("backupdb")
-	public String topdownload(Model model) {
+	@RequestMapping(value = "backupdb", method = RequestMethod.GET)
+	public ResponseEntity<InputStreamResource> backupdb(HttpServletRequest request) throws IOException{
+		HttpHeaders responseHeader = new HttpHeaders();
+	    try {
+	      File file = ResourceUtils.getFile("classpath:file/sdtco.txt");
+	//      FileWriter fw = new FileWriter(file);
+	     
+	     List<SDTCO> sdtCO = sdtCOService.findAll();
+	     FileWriter fw = new FileWriter(file);
+	      for (SDTCO sdt : sdtCO) {
+	    	  fw.write("insert into SDT_CO (phone, phan_tram) values ('" + sdt.getPhone() + "'," + sdt.getPhanTram() +  ")\n");
+	      }
+	      fw.close();
+	      byte[] data = FileUtils.readFileToByteArray(file);
+	      // Set mimeType trả về
+	      responseHeader.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+	      // Thiết lập thông tin trả về
+	      responseHeader.set("Content-disposition", "attachment; filename=" + file.getName());
+	      responseHeader.setContentLength(data.length);
+	      InputStream inputStream = new BufferedInputStream(new ByteArrayInputStream(data));
+	      InputStreamResource inputStreamResource = new InputStreamResource(inputStream);
+	      return new ResponseEntity<InputStreamResource>(inputStreamResource, responseHeader, HttpStatus.OK);
+	    } catch (Exception ex) {
+	      return new ResponseEntity<InputStreamResource>(null, responseHeader, HttpStatus.INTERNAL_SERVER_ERROR);
+	    }
+	  }
 		
-		return "topdownload";
-	}
+	
 	
 	
 	
@@ -130,6 +166,12 @@ public class TimChinhChuController {
 	public void increaseDownloads(Files file) {
 		file.setDownloads(file.getDownloads() + 1);
 		filesJpaRepository.insert(file);
+	}
+	
+
+	@GetMapping("trending")
+	public String trending() {
+		return "trending";
 	}
 
 	

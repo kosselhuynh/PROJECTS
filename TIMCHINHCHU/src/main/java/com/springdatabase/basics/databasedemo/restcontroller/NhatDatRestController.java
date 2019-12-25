@@ -12,6 +12,8 @@ import java.util.Map;
 import java.util.stream.Collector;
 
 import javax.servlet.http.HttpServletRequest;
+
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+import com.springdatabase.basics.databasedemo.controller.Utils;
 import com.springdatabase.basics.databasedemo.entity.AdParameters;
 import com.springdatabase.basics.databasedemo.entity.Ads;
 import com.springdatabase.basics.databasedemo.entity.ChoTot;
@@ -38,6 +41,7 @@ import com.springdatabase.basics.databasedemo.service.SDTCOService;
 import com.springdatabase.basics.databasedemo.service.TanSuatService;
 import com.springdatabase.basics.databasedemo.service.TrendingService;
 
+
 @RestController
 public class NhatDatRestController {
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -45,8 +49,10 @@ public class NhatDatRestController {
 	FilesService filesService;
 	@Autowired
 	TrendingService trendingService;
-	public static String nameSearch;
-	public static String catalogy;
+	public static String tinhthanhpho;
+	public static String quanhuyen;
+	public static String chuyenmuc;
+	public static String tutimkiem;
 
 	@Autowired
 	NhaDatService nhaDatService;
@@ -64,8 +70,12 @@ public class NhatDatRestController {
 
 		// getDataFromJsonChoTot();
 		// Read from db
-
-		return nhaDatService.findAll();
+		if(StringUtils.equals(tinhthanhpho, "Toàn quốc") && StringUtils.equals(quanhuyen, "Chọn quận huyện ...")
+				&& StringUtils.equals(chuyenmuc, "Chọn chuyên mục ...") && StringUtils.isBlank(tutimkiem)) {
+			//Find All 100 Top new 
+			return nhaDatService.findAll_where_Top100();
+		}
+		return nhaDatService.findAll_where_Top100();
 
 	}
 
@@ -108,7 +118,8 @@ public class NhatDatRestController {
 			AdParameters adParameter = restTemplate.getForObject(
 					"https://gateway.chotot.com/v1/public/ad-listing/" + chotot.getAds().get(i).getList_id(),
 					AdParameters.class);
-			// System.out.println(i);
+			com.springdatabase.basics.databasedemo.controller.Utils.convertString2Date(adParameter.getAd().getList_time());
+			 //END
 			// So sanh table SDTCO va save to table NhaDat
 			compareWithTableSDTCO_and_insertTableNhaDat(chotot.getAds().get(i), adParameter);
 			// Data input à nhà đất all : mỗi phút (kiểm tra có tồn tại hay không mới lưu)
@@ -136,6 +147,8 @@ public class NhatDatRestController {
 			nd.setSoLanDangBai(nd.getSoLanDangBai() + 1);
 			nd.setLastDate(adParameter.getAd().getList_time());
 			nd.setSoNgay(nd.getSoNgay() + 1);//??
+			
+			tanSuatService.insert(nd);
 		}
 
 		// System.out.println("Save to NhaDatAll success");
@@ -166,6 +179,7 @@ public class NhatDatRestController {
 			nd.setTypeName(adParameter.getAd().getType_name());
 			nd.setOwner(adParameter.getAd().isOwner());
 			nd.setListTime(chototAds.getList_time());
+			nd.setDateUploadConvert(Utils.convertString2Date(chototAds.getList_time()));
 			nhaDatService.insert(nd);
 			// System.out.println("Save to NhaDat success");
 		} else {
@@ -199,6 +213,7 @@ public class NhatDatRestController {
 			nd.setTypeName(adParameter.getAd().getType_name());
 			nd.setOwner(adParameter.getAd().isOwner());
 			nd.setListTime(chototAds.getList_time());
+			nd.setDateUploadConvert(Utils.convertString2Date(chototAds.getList_time()));
 			nhaDatAllService.insert(nd);
 			// System.out.println("Save to NhaDatAll success");
 

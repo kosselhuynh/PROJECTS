@@ -85,10 +85,17 @@ $(document).ready(function() {
 
 			},
 			{
-				data:'dateUpload'
+				data:'dateUploadConvert'
 
 			}
 	     ],
+	     columnDefs:[
+	         {
+	           targets:4, render:function(data){
+	             return moment(data).format('HH:MM:ss DD/MM/YYYY'); 
+	           }
+	         }
+	       ]
 
 	} );
 	// Add event listener for opening and closing details
@@ -237,15 +244,21 @@ function format ( data ) {
 		                    <div class="row">
 		                        
 								<div class="col-lg-2 col-md-2 col-sm-12 p-0">
-		                            <select class="form-control search-slt" id="catalogy" name="catalogy" onchange="location = this.value;">
-		                                <option>Toàn quốc</option>
+		                            <select class="form-control search-slt" id="tinhthanhpho" name="tinhthanhpho" onchange="location = this.value;">
+		                                <c:if test="${khuvuc != null}">
+		                                	<option>${khuvuc}</option>
+		                                </c:if>
+		                                <c:if test="${khuvuc == null}">
+		                                	<option>Toàn quốc</option>
+		                                </c:if>
+		                                
 		                                    <c:forEach var = "i" begin = "1" end = "${tinhTP.size()}">
 											          <option value="${i}">${tinhTP.get(i)}</option>
 											      </c:forEach>
 									 </select>
 		                        </div>
 		                        <div class="col-lg-2 col-md-2 col-sm-12 p-0">
-		                            <select class="form-control search-slt" id="catalogy" name="catalogy">
+		                            <select class="form-control search-slt" id="quanhuyen" name="quanhuyen">
 		                                <option>Chọn quận huyện ...</option>
 		                                	<c:if test="${listAreaName.size() > 0}">
 				                                <c:forEach var = "i" begin = "0" end = "${listAreaName.size() - 1}">
@@ -254,29 +267,18 @@ function format ( data ) {
 									      </c:if>
 		                            </select>
 		                        </div>
-<!-- 		                        <div class="btn-group col-lg-2 col-md-2 col-sm-12 p-0"> -->
-<!-- 								   <button class="btn btn-primary dropdown-toggle" -->
-<!-- 								      type="button" -->
-<!-- 								      id="dropdownMenuButton" data-toggle="dropdown"> -->
-<!-- 								   Chọn chuyên mục ... -->
-<!-- 								   </button> -->
-<!-- 								   <div class="dropdown-menu"> -->
-<!-- 								      <h5 class="dropdown-header text-success">Bán nhà đất:</h5> -->
-<!-- 								      <a class="dropdown-item" href="#">Javascript</a> -->
-<!-- 								      <a class="dropdown-item" href="#">Css</a> -->
-<!-- 								      <h5 class="dropdown-header text-success">Cho thuê nhà đât</h5> -->
-<!-- 								      <a class="dropdown-item" href="#">Java</a> -->
-<!-- 								   </div> -->
-<!-- 								</div> -->
 								<div class="col-lg-2 col-md-2 col-sm-12 p-0">
-		                            <select class="form-control search-slt" id="catalogy" name="catalogy">
+		                            <select class="form-control search-slt" id="chuyenmuc" name="chuyenmuc">
 		                                <option>Chọn chuyên mục ...</option>
-		                           		<option>Bán nhà đất:</option>
-		                           		<option>Cho thuê nhà đất:</option>
+		                           		<c:if test="${listTypeName.size() > 0}">
+				                                <c:forEach var = "i" begin = "0" end = "${listTypeName.size() - 1}">
+											          <option>${listTypeName.get(i)}</option>
+											      </c:forEach>
+									      </c:if>
 		                            </select>
 		                        </div>
 								<div class="col-lg-4 col-md-4 col-sm-12 p-0">
-		                            <input type="text" class="form-control search-slt" placeholder="Nhập thông tin cần tìm" id="nameSearch" name="nameSearch">
+		                            <input type="text" class="form-control search-slt" placeholder="Nhập thông tin cần tìm" id="tutimkiem" name="tutimkiem">
 		                        </div>
 		                        <div class="col-lg-2 col-md-2 col-sm-12 p-0">
 		                            <button type="submit" class="btn btn-danger wrn-btn">Tìm kiếm</button>

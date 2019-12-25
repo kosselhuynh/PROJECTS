@@ -1,5 +1,7 @@
 package com.springdatabase.basics.databasedemo.entity;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -64,6 +66,19 @@ public class NhaDat {
 	@Column(name = "type_name")
 	private String  typeName;
 	
+	//Dung sort khi get tu db len
+	@Column(name = "date_upload_convert")
+	private Date  dateUploadConvert;
+	
+	
+	public Date getDateUploadConvert() {
+		return dateUploadConvert;
+	}
+
+	public void setDateUploadConvert(Date dateUploadConvert) {
+		this.dateUploadConvert = dateUploadConvert;
+	}
+
 	public int getId() {
 		return id;
 	}
@@ -226,15 +241,17 @@ public class NhaDat {
 		this.listTime = listTime;
 	}
 
-	public NhaDat(int id, String listId, boolean owner, String subject, String dateUpload, String accountName,
-			String body, String address, String wardName, String areaName, int region, String regionName, String price,
-			String priceString, int rooms, String categoryname, String phone, String typeName, String listTime) {
+	public NhaDat(int id, String listId, boolean owner, String subject, String dateUpload, String listTime,
+			String accountName, String body, String address, String wardName, String areaName, int region,
+			String regionName, String price, String priceString, int rooms, String categoryname, String phone,
+			String typeName, Date dateUploadConvert) {
 		super();
 		this.id = id;
 		this.listId = listId;
 		this.owner = owner;
 		this.subject = subject;
 		this.dateUpload = dateUpload;
+		this.listTime = listTime;
 		this.accountName = accountName;
 		this.body = body;
 		this.address = address;
@@ -248,17 +265,20 @@ public class NhaDat {
 		this.categoryname = categoryname;
 		this.phone = phone;
 		this.typeName = typeName;
-		this.listTime = listTime;
+		this.dateUploadConvert = dateUploadConvert;
 	}
 
 	@Override
 	public String toString() {
 		return "NhaDat [id=" + id + ", listId=" + listId + ", owner=" + owner + ", subject=" + subject + ", dateUpload="
-				+ dateUpload + ", accountName=" + accountName + ", body=" + body + ", address=" + address
-				+ ", wardName=" + wardName + ", areaName=" + areaName + ", regionName=" + regionName + ", price="
-				+ price + ", priceString=" + priceString + ", rooms=" + rooms + ", categoryname=" + categoryname
-				+ ", phone=" + phone + ", typeName=" + typeName  + "]";
+				+ dateUpload + ", listTime=" + listTime + ", accountName=" + accountName + ", body=" + body
+				+ ", address=" + address + ", wardName=" + wardName + ", areaName=" + areaName + ", region=" + region
+				+ ", regionName=" + regionName + ", price=" + price + ", priceString=" + priceString + ", rooms="
+				+ rooms + ", categoryname=" + categoryname + ", phone=" + phone + ", typeName=" + typeName
+				+ ", dateUploadConvert=" + dateUploadConvert + "]";
 	}
+
+	
 
 	
 	

@@ -10,7 +10,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "SDT_CO")
-@NamedQuery(name="find_all_SDTCO", query = "select c from SDTCO c")
+@NamedQuery(name="find_all_SDTCO", query = "select s from SDTCO s") //select nd from NhaDat nd
 public class SDTCO {
 	@Id
 	private String  phone;
