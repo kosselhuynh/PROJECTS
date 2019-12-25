@@ -10,7 +10,9 @@ import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Repository;
 
+import com.springdatabase.basics.databasedemo.entity.NhaDat;
 import com.springdatabase.basics.databasedemo.entity.NhaDatAll;
+import com.springdatabase.basics.databasedemo.entity.SDTCO;
 import com.springdatabase.basics.databasedemo.entity.TanSuat;
 
 @Repository
@@ -76,5 +78,45 @@ public class TanSuatService {
 		}else {
 			return rs;
 		}
+	}
+
+	public List<TanSuat> findAll_Where_more10Post() {
+		List<TanSuat> result;
+		TypedQuery<TanSuat> namedQuery;
+		try {
+			namedQuery = entityManager.createQuery("Select nd from TanSuat nd where nd.tanSuat >= 10", TanSuat.class);
+			result = namedQuery.getResultList();
+		}catch (NoResultException e) {
+			return null;
+		}
+		return result;
+	}
+
+	public List<TanSuat> findAll_Where_listSDTCO_100Percent(List<SDTCO> listSDTCO_100Percent) {
+		List<TanSuat> listResult = null;
+		for (SDTCO sdtco : listSDTCO_100Percent) {
+			List<TanSuat> results;
+			TypedQuery<TanSuat> namedQuery;
+			try {
+				namedQuery = entityManager.createQuery("Select nd from TanSuat nd where nd.phone = '" + sdtco.getPhone()+ "'", TanSuat.class);
+				results = namedQuery.getResultList();
+				listResult.addAll(results);
+			}catch (NoResultException e) {
+				return null;
+			}
+		}
+		return listResult;
+	}
+
+	public List<TanSuat> findAll_Where_TanSuat_Bigger_AVGTanSuat(double avgTanSuat) {
+		List<TanSuat> result;
+		TypedQuery<TanSuat> namedQuery;
+		try {
+			namedQuery = entityManager.createQuery("Select nd from TanSuat nd where nd.tanSuat >= " +avgTanSuat+ "'", TanSuat.class);
+			result = namedQuery.getResultList();
+		}catch (NoResultException e) {
+			return null;
+		}
+		return result;
 	}
 }

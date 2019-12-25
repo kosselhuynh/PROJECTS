@@ -26,6 +26,8 @@ public class NhaDatAll {
 	private boolean owner;
 
 	private String subject;
+	@Column(name = "subject_lowercase")
+	private String subjectLowerCase;
 
 	@Column(name = "date_upload")
 	private String dateUpload;
@@ -58,8 +60,8 @@ public class NhaDatAll {
 
 	private int rooms;
 
-	@Column(name = "category_name")
-	private String categoryname;
+	@Column(name = "catelogy_name")
+	private String catalogyName;
 
 	private String phone;
 
@@ -76,6 +78,16 @@ public class NhaDatAll {
 
 	public void setDateUploadConvert(Date dateUploadConvert) {
 		this.dateUploadConvert = dateUploadConvert;
+	}
+	
+	
+
+	public String getSubjectLowerCase() {
+		return subjectLowerCase;
+	}
+
+	public void setSubjectLowerCase(String subjectLowerCase) {
+		this.subjectLowerCase = subjectLowerCase;
 	}
 
 	public int getId() {
@@ -182,12 +194,14 @@ public class NhaDatAll {
 		this.rooms = rooms;
 	}
 
-	public String getCategoryname() {
-		return categoryname;
+	
+
+	public String getCatalogyName() {
+		return catalogyName;
 	}
 
-	public void setCategoryname(String categoryname) {
-		this.categoryname = categoryname;
+	public void setCatalogyName(String catalogyName) {
+		this.catalogyName = catalogyName;
 	}
 
 	public String getPhone() {
@@ -241,15 +255,18 @@ public class NhaDatAll {
 		this.phone = phone;
 	}
 
-	public NhaDatAll(int id, String listId, boolean owner, String subject, String dateUpload, String listTime,
-			String accountName, String body, String address, String wardName, String areaName, int region,
-			String regionName, String price, String priceString, int rooms, String categoryname, String phone,
-			String typeName, Date dateUploadConvert) {
+	
+
+	public NhaDatAll(int id, String listId, boolean owner, String subject, String subjectLowerCase, String dateUpload,
+			String listTime, String accountName, String body, String address, String wardName, String areaName,
+			int region, String regionName, String price, String priceString, int rooms, String catalogyName,
+			String phone, String typeName, Date dateUploadConvert) {
 		super();
 		this.id = id;
 		this.listId = listId;
 		this.owner = owner;
 		this.subject = subject;
+		this.subjectLowerCase = subjectLowerCase;
 		this.dateUpload = dateUpload;
 		this.listTime = listTime;
 		this.accountName = accountName;
@@ -262,7 +279,7 @@ public class NhaDatAll {
 		this.price = price;
 		this.priceString = priceString;
 		this.rooms = rooms;
-		this.categoryname = categoryname;
+		this.catalogyName = catalogyName;
 		this.phone = phone;
 		this.typeName = typeName;
 		this.dateUploadConvert = dateUploadConvert;
@@ -274,7 +291,7 @@ public class NhaDatAll {
 				+ ", dateUpload=" + dateUpload + ", listTime=" + listTime + ", accountName=" + accountName + ", body="
 				+ body + ", address=" + address + ", wardName=" + wardName + ", areaName=" + areaName + ", region="
 				+ region + ", regionName=" + regionName + ", price=" + price + ", priceString=" + priceString
-				+ ", rooms=" + rooms + ", categoryname=" + categoryname + ", phone=" + phone + ", typeName=" + typeName
+				+ ", rooms=" + rooms + ", categoryname=" + catalogyName + ", phone=" + phone + ", typeName=" + typeName
 				+ ", dateUploadConvert=" + dateUploadConvert + "]";
 	}
 

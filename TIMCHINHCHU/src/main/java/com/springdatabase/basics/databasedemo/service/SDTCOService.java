@@ -1,5 +1,6 @@
 package com.springdatabase.basics.databasedemo.service;
 
+import java.util.Iterator;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -31,6 +32,14 @@ public class SDTCOService {
 		entityManager.merge(sdtCo);
 
 	}
+	//insert list
+	public void insert(List<SDTCO> sdtCo) {
+		for (SDTCO sdtco2 : sdtCo) {
+			entityManager.merge(sdtco2);
+		}
+		
+
+	}
 
 	public boolean findOneWithPhone(String phone) {
 		SDTCO rs = null;
@@ -49,4 +58,6 @@ public class SDTCOService {
 		}
 		
 	}
+
+	
 }

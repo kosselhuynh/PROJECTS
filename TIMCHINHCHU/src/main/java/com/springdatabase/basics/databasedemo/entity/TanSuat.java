@@ -29,7 +29,7 @@ public class TanSuat {
 	private String  lastDate;
 	
 	@Column(name = "tan_suat")
-	private int  tanSuat;//tanSuat = soLanDangBai/soNgay
+	private double  tanSuat;//tanSuat = soLanDangBai/soNgay
 
 	public String getPhone() {
 		return phone;
@@ -72,11 +72,11 @@ public class TanSuat {
 		this.lastDate = lastDate;
 	}
 
-	public int getTanSuat() {
+	public double getTanSuat() {
 		return tanSuat;
 	}
 
-	public void setTanSuat(int tanSuat) {
+	public void setTanSuat(double tanSuat) {
 		this.tanSuat = tanSuat;
 	}
 
@@ -85,7 +85,7 @@ public class TanSuat {
 		super();
 	}
 
-	public TanSuat(String phone, int soLanDangBai, int soNgay, String firstDate, String lastDate, int tanSuat) {
+	public TanSuat(String phone, int soLanDangBai, int soNgay, String firstDate, String lastDate, double tanSuat) {
 		super();
 		this.phone = phone;
 		this.soLanDangBai = soLanDangBai;

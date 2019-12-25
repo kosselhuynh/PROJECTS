@@ -10,6 +10,7 @@ import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Repository;
 
+import com.springdatabase.basics.databasedemo.entity.NhaDat;
 import com.springdatabase.basics.databasedemo.entity.NhaDatAll;
 import com.springdatabase.basics.databasedemo.entity.SDTCO;
 
@@ -45,5 +46,8 @@ public class NhaDatAllService {
 	public void insert(NhaDatAll nhaDat) {
 		entityManager.merge(nhaDat);		
 	}
+
+	
+
 	
 }

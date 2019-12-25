@@ -73,12 +73,14 @@ public class TimChinhChuController {
 			List<NhaDat> arrayNhaDat = new ArrayList<NhaDat>();
 			arrayNhaDat = nhadatService.findAll_With_RegionName(tinhTP.get(i));
 			model.addAttribute("listTypeName", Utils.createTypeName(arrayNhaDat));
+			model.addAttribute("listCatalogyName", Utils.createCatalogyName(arrayNhaDat));
 			model.addAttribute("listAreaName", Utils.createWardName(arrayNhaDat));
 			model.addAttribute("tinhTP", tinhTP);
 			
 		}else {
 			SDTCO sdtCo = new SDTCO();
 			sdtCo.setPhone("0" + String.valueOf(i));
+			sdtCo.setPhanTram(100);
 			sdtCOService.insert(sdtCo );
 		//	return "redirect:timchinhchu";
 		}
@@ -92,11 +94,16 @@ public class TimChinhChuController {
 	
 	@GetMapping("actionFormSearch")
 	public String formSearch(@RequestParam("tinhthanhpho") String tinhthanhpho, @RequestParam("quanhuyen") String quanhuyen, 
-			@RequestParam("chuyenmuc") String chuyenmuc, @RequestParam("tutimkiem") String tutimkiem) {
+			@RequestParam("chuyenmuc") String chuyenmuc, @RequestParam("tutimkiem") String tutimkiem, @RequestParam("loai") String loai,
+			Model model) {
 		nhaDatRestController.tinhthanhpho = StringUtils.trim(tinhthanhpho);
 		nhaDatRestController.quanhuyen = StringUtils.trim(quanhuyen);
 		nhaDatRestController.chuyenmuc = StringUtils.trim(chuyenmuc);
+		nhaDatRestController.loai = StringUtils.trim(loai);
 		nhaDatRestController.tutimkiem = StringUtils.trim(tutimkiem.toLowerCase());
+		
+		Utils.createtinhTP(tinhTP);
+		model.addAttribute("tinhTP", tinhTP);
 		return "timchinhchu";
 	}
 	
@@ -112,7 +119,7 @@ public class TimChinhChuController {
 	     List<SDTCO> sdtCO = sdtCOService.findAll();
 	     FileWriter fw = new FileWriter(file);
 	      for (SDTCO sdt : sdtCO) {
-	    	  fw.write("insert into SDT_CO (phone, phan_tram) values ('" + sdt.getPhone() + "'," + sdt.getPhanTram() +  ")\n");
+	    	  fw.write("insert into SDT_CO (phone, phan_tram) values ('" + sdt.getPhone() + "'," + sdt.getPhanTram() +  ")" + "\n");
 	      }
 	      fw.close();
 	      byte[] data = FileUtils.readFileToByteArray(file);

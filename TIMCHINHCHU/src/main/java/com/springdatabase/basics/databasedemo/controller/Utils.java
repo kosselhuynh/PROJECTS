@@ -3,47 +3,52 @@ package com.springdatabase.basics.databasedemo.controller;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.lang3.StringUtils;
 
 import com.springdatabase.basics.databasedemo.entity.NhaDat;
+import com.springdatabase.basics.databasedemo.entity.TanSuat;
 
 public class Utils {
-
-	// Convert KB to MB, GB
-	public static String convert2MB_GB(double size) {
-		String sizeNew = null;
-		if (size > 1024) {
-			size = Math.round(size / 1024);
-			if (size > 1024) {
-				size = Math.round(size / 1024);
-				if (size > 1024) {
-					size = Math.round(size / 1024);
-					sizeNew = String.valueOf(size) + " GB";
-				} else {
-					sizeNew = String.valueOf(size) + " MB";
-				}
-			} else {
-				sizeNew = String.valueOf(size) + " KB";
+	
+	public static long calculateBetweenTwoDate(Date d1, Date d2) {
+		long getDaysDiff = 0;
+		long getDiff = 0;
+		try {
+			if(d2.after(d1)) {
+				getDiff = d2.getTime() - d1.getTime();
+			}else {
+				getDiff = d1.getTime() - d2.getTime();
 			}
-		} else {
-			sizeNew = String.valueOf(size) + " Byte";
-		}
-		return sizeNew;
+			   // using TimeUnit class from java.util.concurrent package
+			   getDaysDiff = TimeUnit.MILLISECONDS.toDays(getDiff);
 
+			   System.out.println("Differance between date is " + getDaysDiff + " days.");
+			  } catch (Exception e) {
+			   e.printStackTrace();
+			  }
+		return getDaysDiff + 1;
+			 
+	}
+
+	public static void sortByDate(List<NhaDat> listSortNhaDat) {
+		Collections.sort(listSortNhaDat, new DateComparator());
+	}
+	public static class DateComparator implements Comparator<NhaDat> {
+		public int compare(NhaDat s1, NhaDat s2) {
+		//	return s2.getListTime().compareTo(s1.getListTime());
+			return s1.getDateUploadConvert().compareTo(s2.getDateUploadConvert());
+		}
 	}
 	//Convert String to Date from Json
 	public static Date convertString2Date(String strTime) {
-		 System.out.println("========CHECK TIME UPLOAD ======");
 		 Calendar calendar = Calendar.getInstance();
 		 calendar.setTimeInMillis(Long.valueOf(strTime));
-		// rightNow.getTimeInMillis();
-	//	 System.out.println(calendar.getTimeInMillis());
-	//	 System.out.println(calendar.getTime());
 		 return calendar.getTime();
 	}
 	
@@ -71,6 +76,18 @@ public class Utils {
 		return listAreaName;
 	}
 
+	public static List<String> createCatalogyName(List<NhaDat> arrayNhaDat) {
+		List<String> listCatalogyName = new ArrayList<String>();
+		for (int i = 0; i < arrayNhaDat.size(); i++) {
+			if (!listCatalogyName.contains(arrayNhaDat.get(i).getCatalogyName())) {
+				listCatalogyName.add(arrayNhaDat.get(i).getCatalogyName());
+			}
+
+		}
+		Collections.sort(listCatalogyName);
+		return listCatalogyName;
+	}
+	
 	public static List<String> createTypeName(List<NhaDat> arrayNhaDat) {
 		List<String> listTypeName = new ArrayList<String>();
 		for (int i = 0; i < arrayNhaDat.size(); i++) {
@@ -169,5 +186,41 @@ public class Utils {
 		tinhTP.put(62, "Vĩnh Phúc");
 		tinhTP.put(63, "Yên Bái");
 	}
+	
+	//CU
+	// Convert KB to MB, GB
+		public static String convert2MB_GB(double size) {
+			String sizeNew = null;
+			if (size > 1024) {
+				size = Math.round(size / 1024);
+				if (size > 1024) {
+					size = Math.round(size / 1024);
+					if (size > 1024) {
+						size = Math.round(size / 1024);
+						sizeNew = String.valueOf(size) + " GB";
+					} else {
+						sizeNew = String.valueOf(size) + " MB";
+					}
+				} else {
+					sizeNew = String.valueOf(size) + " KB";
+				}
+			} else {
+				sizeNew = String.valueOf(size) + " Byte";
+			}
+			return sizeNew;
+
+		}
+
+		public static double calculateAVG(List<TanSuat> listSDT_TanSuat) {
+			double sum = 0;
+			for (TanSuat tanSuat : listSDT_TanSuat) {
+				sum += tanSuat.getTanSuat();
+			}
+			return sum/listSDT_TanSuat.size();
+		}
+
+		
+
+		
 
 }

@@ -270,6 +270,16 @@ function format ( data ) {
 								<div class="col-lg-2 col-md-2 col-sm-12 p-0">
 		                            <select class="form-control search-slt" id="chuyenmuc" name="chuyenmuc">
 		                                <option>Chọn chuyên mục ...</option>
+		                           		<c:if test="${listCatalogyName.size() > 0}">
+				                                <c:forEach var = "i" begin = "0" end = "${listCatalogyName.size() - 1}">
+											          <option>${listCatalogyName.get(i)}</option>
+											      </c:forEach>
+									      </c:if>
+		                            </select>
+		                        </div>
+		                        <div class="col-lg-2 col-md-2 col-sm-12 p-0">
+		                            <select class="form-control search-slt" id="loai" name="loai">
+		                                <option>Chọn loại ...</option>
 		                           		<c:if test="${listTypeName.size() > 0}">
 				                                <c:forEach var = "i" begin = "0" end = "${listTypeName.size() - 1}">
 											          <option>${listTypeName.get(i)}</option>
@@ -277,10 +287,10 @@ function format ( data ) {
 									      </c:if>
 		                            </select>
 		                        </div>
-								<div class="col-lg-4 col-md-4 col-sm-12 p-0">
+								<div class="col-lg-3 col-md-3 col-sm-12 p-0">
 		                            <input type="text" class="form-control search-slt" placeholder="Nhập thông tin cần tìm" id="tutimkiem" name="tutimkiem">
 		                        </div>
-		                        <div class="col-lg-2 col-md-2 col-sm-12 p-0">
+		                        <div class="col-lg-1 col-md-1 col-sm-12 p-0">
 		                            <button type="submit" class="btn btn-danger wrn-btn">Tìm kiếm</button>
 		                        </div>
 		                    </div>

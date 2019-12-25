@@ -27,6 +27,9 @@ public class NhaDat {
 	
 	private String  subject;
 	
+	@Column(name = "subject_lowercase")
+	private String subjectLowerCase;
+	
 	@Column(name = "date_upload")
 	private String  dateUpload;
 	
@@ -58,8 +61,8 @@ public class NhaDat {
 	
 	private int  rooms;
 	
-	@Column(name = "category_name")
-	private String  categoryname;
+	@Column(name = "catalogy_name")
+	private String  catalogyName;
 	
 	private String  phone;
 	
@@ -77,6 +80,15 @@ public class NhaDat {
 
 	public void setDateUploadConvert(Date dateUploadConvert) {
 		this.dateUploadConvert = dateUploadConvert;
+	}
+
+	
+	public String getSubjectLowerCase() {
+		return subjectLowerCase;
+	}
+
+	public void setSubjectLowerCase(String subjectLowerCase) {
+		this.subjectLowerCase = subjectLowerCase;
 	}
 
 	public int getId() {
@@ -175,12 +187,14 @@ public class NhaDat {
 		this.rooms = rooms;
 	}
 
-	public String getCategoryname() {
-		return categoryname;
+	
+
+	public String getCatalogyName() {
+		return catalogyName;
 	}
 
-	public void setCategoryname(String categoryname) {
-		this.categoryname = categoryname;
+	public void setCatalogyName(String catalogyName) {
+		this.catalogyName = catalogyName;
 	}
 
 	public String getPhone() {
@@ -241,9 +255,9 @@ public class NhaDat {
 		this.listTime = listTime;
 	}
 
-	public NhaDat(int id, String listId, boolean owner, String subject, String dateUpload, String listTime,
+	public NhaDat(int id, String listId, boolean owner, String subject, String subjectLowerCase, String dateUpload, String listTime,
 			String accountName, String body, String address, String wardName, String areaName, int region,
-			String regionName, String price, String priceString, int rooms, String categoryname, String phone,
+			String regionName, String price, String priceString, int rooms, String catalogyName, String phone,
 			String typeName, Date dateUploadConvert) {
 		super();
 		this.id = id;
@@ -262,10 +276,11 @@ public class NhaDat {
 		this.price = price;
 		this.priceString = priceString;
 		this.rooms = rooms;
-		this.categoryname = categoryname;
+		this.catalogyName = catalogyName;
 		this.phone = phone;
 		this.typeName = typeName;
 		this.dateUploadConvert = dateUploadConvert;
+		this.subjectLowerCase = subjectLowerCase;
 	}
 
 	@Override
@@ -274,7 +289,7 @@ public class NhaDat {
 				+ dateUpload + ", listTime=" + listTime + ", accountName=" + accountName + ", body=" + body
 				+ ", address=" + address + ", wardName=" + wardName + ", areaName=" + areaName + ", region=" + region
 				+ ", regionName=" + regionName + ", price=" + price + ", priceString=" + priceString + ", rooms="
-				+ rooms + ", categoryname=" + categoryname + ", phone=" + phone + ", typeName=" + typeName
+				+ rooms + ", categoryName=" + catalogyName + ", phone=" + phone + ", typeName=" + typeName
 				+ ", dateUploadConvert=" + dateUploadConvert + "]";
 	}
 

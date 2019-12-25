@@ -90,8 +90,15 @@ CREATE TABLE SDT_CO (
   insert into user (user_id, fullname, email, password, confirm_password, role_id)
 			values (2, 'Duong Hao', 'hao@gmail.com','123456','123456',2);
 			
-insert into SDT_CO (phone, phan_tram)
-	values ('0983676415',0);
- 
-
-  
+insert into SDT_CO (phone, phan_tram)	values ('0919222700',100);
+insert into SDT_CO (phone, phan_tram)	values ('0934192279',100);	
+insert into SDT_CO (phone, phan_tram)	values ('0963016754',100);	
+insert into SDT_CO (phone, phan_tram)	values ('0984172093',100);
+insert into SDT_CO (phone, phan_tram)	values ('0375551823',100);
+insert into SDT_CO (phone, phan_tram)	values ('0909592262',100);	
+insert into SDT_CO (phone, phan_tram)	values ('0938507989',100);
+insert into SDT_CO (phone, phan_tram)	values ('0902971889',100);
+insert into SDT_CO (phone, phan_tram)	values ('0902900365',100);
+insert into SDT_CO (phone, phan_tram)	values ('0919419938',100);
+insert into SDT_CO (phone, phan_tram)	values ('0915400303',100);
+insert into SDT_CO (phone, phan_tram)	values ('0911135393',100); 
