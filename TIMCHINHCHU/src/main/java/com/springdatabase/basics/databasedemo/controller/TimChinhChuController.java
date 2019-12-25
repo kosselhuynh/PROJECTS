@@ -89,8 +89,9 @@ public class TimChinhChuController {
 		return "trending";
 	}
 	
-	@GetMapping("topdownloads")
+	@GetMapping("backupdb")
 	public String topdownload(Model model) {
+		
 		return "topdownload";
 	}
 	

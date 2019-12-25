@@ -29,6 +29,9 @@
 <script	src="http://cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.4/moment.min.js"></script>
 <script	src="http://cdn.datatables.net/plug-ins/1.10.20/sorting/datetime-moment.js"></script>
 
+
+
+
 <style>
 .input-group.md-form.form-sm.form-1 input {
 	border: 1px solid #bdbdbd;
@@ -103,7 +106,17 @@ $(document).ready(function() {
             tr.addClass('shown');
         }
     } );
+
+
+    $('#btnDelete').click(function() {
+        bootbox.confirm("Are you sure want to delete?", function(result) {
+          alert("Confirm result: " + result);
+        });
+      });
+    
 } );
+
+
 
 /* Formatting function for row details - modify as you need */
 function format ( data ) {
@@ -127,19 +140,54 @@ function format ( data ) {
     	'</tr>'+
         '<tr width="15%">'+
             '<td>Số của mối giới:</td>'+
-            '<td><a href = "'+data.phone+'" id="'+data.phone+'">Yêu cầu xóa</a></td>'+
+//             '<td><a href = "'+data.phone+'" id="'+data.phone+'">Yêu cầu xóa</a></td>'+
+				'<td><a data-href="'+data.phone+'" data-toggle="modal" data-target="#confirm-delete" class="btn btn-primary"> Đây là số của môi giới </a></td>'+
         '</tr>'+
     '</table>';
 }
 </script>
+
+
+<div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Xác nhận</h5>
+			        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			          <span aria-hidden="true">&times;</span>
+			        </button>
+                </div>
+                <div class="modal-body">
+                    <p>Đây là số điện thoại của môi giới</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                    	Đóng
+                    </button>
+                 	<a class="btn btn-danger btn-ok" style="padding: 6px 10px;">Đồng ý</a>
+                </div>
+            </div>
+        </div>
+</div> 
+
+
+ <script>
+ $('#confirm-delete').on('show.bs.modal', function(e) {
+	 var data = $(e.relatedTarget).data();
+     $('.title', this).text(data.recordTitle);
+     $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
+ });
+    </script>
+
 </head>
+
 
 <body>
 
 <!-- MENU -->
 <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
       <a class="navbar-brand" href="files">
-      <img src="<c:url value="/images/logo.png" />" height="30" width="30">REE SOFTWARE FOR EVERYONE
+      <img src="<c:url value="/images/logo.png" />" height="30" width="30"> ÌM CHÍNH CHỦ
       </a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample03" aria-controls="navbarsExample03" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -148,13 +196,13 @@ function format ( data ) {
       <div class="collapse navbar-collapse" id="navbarsExample03">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item">
-            <a class="nav-link" href="topdownloads">Top Downloads</a>
+            <a class="nav-link" href="backupdb">Backup Database</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="trending">Trending</a>
+            <a class="nav-link" href="trending"></a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="contact">Contact</a>
+            <a class="nav-link" href="contact"></a>
           </li>
          </ul>
          <button type="button" class="btn btn-info-menu" style="float: right;">
@@ -174,8 +222,8 @@ function format ( data ) {
 		<div class="container">
 		    <div class="row pt-1 pb-1">
 		        <div class="col-lg-12">
-		            <h4 class="text-center">FIND <img src="<c:url value="/images/logo.png" />" height="30" width="30">REE SOFTWARE</h4>
-		            <h6 class="text-center">Always update new software</h6>
+		            <h4 class="text-center"><img src="<c:url value="/images/logo.png" />" height="30" width="30"> ÌM CHÍNH CHỦ</h4>
+		            <h6 class="text-center">Cập nhật liên tục thông tin nhà đất toàn quốc</h6>
 		            <p></p>
 		        </div>
 		    </div>
@@ -187,9 +235,7 @@ function format ( data ) {
 		            <div class="row">
 		                <div class="col-lg-12">
 		                    <div class="row">
-		                        <div class="col-lg-4 col-md-4 col-sm-12 p-0">
-		                            <input type="text" class="form-control search-slt" placeholder="Enter name software" id="nameSearch" name="nameSearch">
-		                        </div>
+		                        
 								<div class="col-lg-2 col-md-2 col-sm-12 p-0">
 		                            <select class="form-control search-slt" id="catalogy" name="catalogy" onchange="location = this.value;">
 		                                <option>Toàn quốc</option>
@@ -200,7 +246,7 @@ function format ( data ) {
 		                        </div>
 		                        <div class="col-lg-2 col-md-2 col-sm-12 p-0">
 		                            <select class="form-control search-slt" id="catalogy" name="catalogy">
-		                                <option>Chọn quận, huyện </option>
+		                                <option>Chọn quận huyện ...</option>
 		                                	<c:if test="${listAreaName.size() > 0}">
 				                                <c:forEach var = "i" begin = "0" end = "${listAreaName.size() - 1}">
 											          <option>${listAreaName.get(i)}</option>
@@ -208,9 +254,32 @@ function format ( data ) {
 									      </c:if>
 		                            </select>
 		                        </div>
-		                        
+<!-- 		                        <div class="btn-group col-lg-2 col-md-2 col-sm-12 p-0"> -->
+<!-- 								   <button class="btn btn-primary dropdown-toggle" -->
+<!-- 								      type="button" -->
+<!-- 								      id="dropdownMenuButton" data-toggle="dropdown"> -->
+<!-- 								   Chọn chuyên mục ... -->
+<!-- 								   </button> -->
+<!-- 								   <div class="dropdown-menu"> -->
+<!-- 								      <h5 class="dropdown-header text-success">Bán nhà đất:</h5> -->
+<!-- 								      <a class="dropdown-item" href="#">Javascript</a> -->
+<!-- 								      <a class="dropdown-item" href="#">Css</a> -->
+<!-- 								      <h5 class="dropdown-header text-success">Cho thuê nhà đât</h5> -->
+<!-- 								      <a class="dropdown-item" href="#">Java</a> -->
+<!-- 								   </div> -->
+<!-- 								</div> -->
+								<div class="col-lg-2 col-md-2 col-sm-12 p-0">
+		                            <select class="form-control search-slt" id="catalogy" name="catalogy">
+		                                <option>Chọn chuyên mục ...</option>
+		                           		<option>Bán nhà đất:</option>
+		                           		<option>Cho thuê nhà đất:</option>
+		                            </select>
+		                        </div>
+								<div class="col-lg-4 col-md-4 col-sm-12 p-0">
+		                            <input type="text" class="form-control search-slt" placeholder="Nhập thông tin cần tìm" id="nameSearch" name="nameSearch">
+		                        </div>
 		                        <div class="col-lg-2 col-md-2 col-sm-12 p-0">
-		                            <button type="submit" class="btn btn-danger wrn-btn">Search</button>
+		                            <button type="submit" class="btn btn-danger wrn-btn">Tìm kiếm</button>
 		                        </div>
 		                    </div>
 		                </div>

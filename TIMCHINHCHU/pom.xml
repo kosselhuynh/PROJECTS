@@ -19,10 +19,10 @@
 
 	<description>TIMCHINHCHU</description>
 	<!-- -->
-	<properties>
-		<start-class>DatabaseDemoApplication</start-class>
-		<java.version>1.8</java.version>
-	</properties>
+<!-- 	<properties> -->
+<!-- 		<start-class>DatabaseDemoApplication</start-class> -->
+<!-- 		<java.version>1.8</java.version> -->
+<!-- 	</properties> -->
 
 	<dependencies>
 		<dependency>
