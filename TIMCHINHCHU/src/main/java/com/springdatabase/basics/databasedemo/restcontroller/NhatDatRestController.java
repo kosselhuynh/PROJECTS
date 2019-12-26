@@ -70,12 +70,14 @@ public class NhatDatRestController {
 		List<NhaDat> listSortNhaDat = new ArrayList<>();
 		// getDataFromJsonChoTot();
 		// Read from db
+		
+		//TAM BO VI NANG WEB
 		if (StringUtils.equals(tinhthanhpho, "Toàn quốc") && StringUtils.equals(quanhuyen, "Chọn quận huyện ...")
 				&& StringUtils.equals(chuyenmuc, "Chọn chuyên mục ...") && StringUtils.equals(loai, "Chọn loại ...")
 				&& StringUtils.isBlank(tutimkiem)) {
 			// Find All 100 Top new
-			listSortNhaDat = nhaDatService.findAll_where_Top100();
-			Utils.sortByDate(listSortNhaDat);
+	//		listSortNhaDat = nhaDatService.findAll_where_Top100();
+		//	Utils.sortByDate(listSortNhaDat);
 			return listSortNhaDat;
 		}
 		if (!StringUtils.equals(tinhthanhpho, "Toàn quốc") && StringUtils.equals(quanhuyen, "Chọn quận huyện ...")
@@ -83,7 +85,7 @@ public class NhatDatRestController {
 				&& StringUtils.isBlank(tutimkiem)) {
 			// Find All 100 Top new where region_name = tinhthanhpho
 			listSortNhaDat = nhaDatService.findAll_where_Top100_With_RegionName(tinhthanhpho);
-			Utils.sortByDate(listSortNhaDat);
+		//	Utils.sortByDate(listSortNhaDat);
 			return listSortNhaDat;
 		}
 		if (!StringUtils.equals(tinhthanhpho, "Toàn quốc") && !StringUtils.equals(quanhuyen, "Chọn quận huyện ...")
@@ -92,7 +94,7 @@ public class NhatDatRestController {
 			// Find All 100 Top new where region_name = tinhthanhpho and area_name =
 			// quanhuyen
 			listSortNhaDat = nhaDatService.findAll_where_Top100_With_RegionNameAreaName(tinhthanhpho, quanhuyen);
-			Utils.sortByDate(listSortNhaDat);
+		//	Utils.sortByDate(listSortNhaDat);
 			return listSortNhaDat;
 		}
 		if (!StringUtils.equals(tinhthanhpho, "Toàn quốc") && !StringUtils.equals(quanhuyen, "Chọn quận huyện ...")
@@ -102,7 +104,7 @@ public class NhatDatRestController {
 			// quanhuyen and TypeName = chuyenmuc
 			listSortNhaDat = nhaDatService.findAll_where_Top100_With_RegionNameAreaNameCatalogyName(tinhthanhpho,
 					quanhuyen, chuyenmuc);
-			Utils.sortByDate(listSortNhaDat);
+		//	Utils.sortByDate(listSortNhaDat);
 			return listSortNhaDat;
 		}
 		if (!StringUtils.equals(tinhthanhpho, "Toàn quốc") && !StringUtils.equals(quanhuyen, "Chọn quận huyện ...")
@@ -112,7 +114,7 @@ public class NhatDatRestController {
 			// quanhuyen and TypeName = chuyenmuc
 			listSortNhaDat = nhaDatService.findAll_where_Top100_With_RegionNameAreaNameCatalogyNameTypeName(
 					tinhthanhpho, quanhuyen, chuyenmuc, loai);
-			Utils.sortByDate(listSortNhaDat);
+		//	Utils.sortByDate(listSortNhaDat);
 			return listSortNhaDat;
 		}
 		if (!StringUtils.equals(tinhthanhpho, "Toàn quốc") && !StringUtils.equals(quanhuyen, "Chọn quận huyện ...")
@@ -122,13 +124,13 @@ public class NhatDatRestController {
 			// quanhuyen and TypeName = chuyenmuc
 			listSortNhaDat = nhaDatService.findAll_where_Top100_With_RegionNameAreaNameCatalogyNameTypeNameTuTimKiem(
 					tinhthanhpho, quanhuyen, chuyenmuc, loai, tutimkiem);
-			Utils.sortByDate(listSortNhaDat);
+		//	Utils.sortByDate(listSortNhaDat);
 			return listSortNhaDat;
 		} else if (!StringUtils.isBlank(tutimkiem)) {
 			// Find All 100 Top new where region_name = tinhthanhpho and area_name =
 			// quanhuyen and TypeName = chuyenmuc
 			listSortNhaDat = nhaDatService.findAll_where_Top100_With_TuTimKiem(tutimkiem);
-			Utils.sortByDate(listSortNhaDat);
+		//	Utils.sortByDate(listSortNhaDat);
 			return listSortNhaDat;
 		}
 		return nhaDatService.findAll_where_Top100();
@@ -301,6 +303,16 @@ public class NhatDatRestController {
 			nd.setListTime(chototAds.getList_time());
 			nd.setDateUploadConvert(Utils.convertString2Date(chototAds.getList_time()));
 			nd.setSubjectLowerCase(chototAds.getSubject().toLowerCase());
+			
+			if(adParameter.getAd_params().getDirection() != null)
+				nd.setDirection(adParameter.getAd_params().getDirection().getValue());
+			
+			if(adParameter.getAd_params().getProperty_legal_document() != null)
+				nd.setPropertyLegalDocument(adParameter.getAd_params().getProperty_legal_document().getValue());
+			
+			if(adParameter.getAd_params().getProperty_road_condition() != null)
+				nd.setPropertyRoadCondition(adParameter.getAd_params().getProperty_road_condition().getValue());
+			
 			nhaDatService.insert(nd);
 			logger.info(
 					"So dien thoai chua ton tai trong bang NHA DAT ALL  ==> Kiem tra SDT de them vao bang TAN SUAT : "
@@ -340,6 +352,15 @@ public class NhatDatRestController {
 			nd.setListTime(chototAds.getList_time());
 			nd.setDateUploadConvert(Utils.convertString2Date(chototAds.getList_time()));
 			nd.setSubjectLowerCase(chototAds.getSubject().toLowerCase());
+			if(adParameter.getAd_params().getDirection() != null)
+				nd.setDirection(adParameter.getAd_params().getDirection().getValue());
+			
+			if(adParameter.getAd_params().getProperty_legal_document() != null)
+				nd.setPropertyLegalDocument(adParameter.getAd_params().getProperty_legal_document().getValue());
+			
+			if(adParameter.getAd_params().getProperty_road_condition() != null)
+				nd.setPropertyRoadCondition(adParameter.getAd_params().getProperty_road_condition().getValue());
+			
 			nhaDatAllService.insert(nd);
 			logger.info("List ID chua ton tai trong bang NHADAT_ALL ==> Them moi");
 			logger.info("nhaDatAllService.findOne_where_ListID(chototAds.getList_id()) : " + false);

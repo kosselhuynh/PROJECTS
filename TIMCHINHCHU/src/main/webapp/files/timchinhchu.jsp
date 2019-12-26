@@ -6,7 +6,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>TIM NHA CHINH CHU</title>
+<title>IM NHA CHINH CHU</title>
   <meta charset="UTF-8">
   <meta name="description" content="TIM NHA CHINH CHU">
   <meta name="keywords" content="TIM NHA CHINH CHU">
@@ -63,6 +63,7 @@ a {
 
 $(document).ready(function() {
 	var table = $('#filestable').DataTable( {
+		order : [[4,"desc"]],
 		searching:false,
 		pageLength: 15,
  		bInfo: false,
@@ -92,7 +93,7 @@ $(document).ready(function() {
 	     columnDefs:[
 	         {
 	           targets:4, render:function(data){
-	             return moment(data).format('HH:MM:ss DD/MM/YYYY'); 
+	        	   return moment(data).format('YYYY-MM-DD HH:mm:ss'); // return moment(data).format('HH:MM:ss DD/MM/YYYY'); 
 	           }
 	         }
 	       ]
@@ -194,7 +195,7 @@ function format ( data ) {
 <!-- MENU -->
 <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
       <a class="navbar-brand" href="files">
-      <img src="<c:url value="/images/logo.png" />" height="30" width="30"> ÌM CHÍNH CHỦ
+      <img src="<c:url value="/images/logo.png" />" height="30" width="30">ÌM CHÍNH CHỦ
       </a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample03" aria-controls="navbarsExample03" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -229,7 +230,7 @@ function format ( data ) {
 		<div class="container">
 		    <div class="row pt-1 pb-1">
 		        <div class="col-lg-12">
-		            <h4 class="text-center"><img src="<c:url value="/images/logo.png" />" height="30" width="30"> ÌM CHÍNH CHỦ</h4>
+		            <h4 class="text-center"><img src="<c:url value="/images/logo.png" />" height="30" width="30">ÌM CHÍNH CHỦ</h4>
 		            <h6 class="text-center">Cập nhật liên tục thông tin nhà đất toàn quốc</h6>
 		            <p></p>
 		        </div>
@@ -239,6 +240,33 @@ function format ( data ) {
 		<section class="search-sec">
 		    <div class="container">
 		        <form action="actionFormSearch" method="GET" novalidate="novalidate">
+		        	<div class="row">
+		                <div class="col-lg-12">
+		                    <div class="row">
+		                       <div class="form-check-inline">
+								  <label class="form-check-label">
+								    <input type="checkbox" class="form-check-input" value="" id="" checked="checked">Cần bán
+								  </label>
+								</div>
+								<div class="form-check-inline">
+								  <label class="form-check-label">
+								    <input type="checkbox" class="form-check-input" value="">Cần mua
+								  </label>
+								</div>
+								<div class="form-check-inline">
+								  <label class="form-check-label">
+								    <input type="checkbox" class="form-check-input" value="">Cần thuê
+								  </label>
+								</div>
+								<div class="form-check-inline">
+								  <label class="form-check-label">
+								    <input type="checkbox" class="form-check-input" value="">Cho thuê - Sang nhượng
+								  </label>
+								</div>
+		                    </div>
+		                </div>
+		            </div>
+		            
 		            <div class="row">
 		                <div class="col-lg-12">
 		                    <div class="row">
@@ -302,7 +330,7 @@ function format ( data ) {
 		<p></p>
 	
 <!-- END SEARCH -->
-
+Tổng số tin : ...
 <!-- START TABLE -->
 		<div class="row">
 			<div class="col-lg-12">

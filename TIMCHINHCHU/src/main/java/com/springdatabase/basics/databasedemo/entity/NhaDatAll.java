@@ -72,6 +72,39 @@ public class NhaDatAll {
 	@Column(name = "date_upload_convert")
 	private Date dateUploadConvert;
 
+	private String direction;
+	
+	@Column(name = "property_legal_document")
+	private String propertyLegalDocument;
+	
+	@Column(name = "property_road_condition")
+	private String propertyRoadCondition;
+	
+	
+	public String getDirection() {
+		return direction;
+	}
+
+	public void setDirection(String direction) {
+		this.direction = direction;
+	}
+
+	public String getPropertyLegalDocument() {
+		return propertyLegalDocument;
+	}
+
+	public void setPropertyLegalDocument(String propertyLegalDocument) {
+		this.propertyLegalDocument = propertyLegalDocument;
+	}
+
+	public String getPropertyRoadCondition() {
+		return propertyRoadCondition;
+	}
+
+	public void setPropertyRoadCondition(String propertyRoadCondition) {
+		this.propertyRoadCondition = propertyRoadCondition;
+	}
+
 	public Date getDateUploadConvert() {
 		return dateUploadConvert;
 	}
@@ -255,12 +288,11 @@ public class NhaDatAll {
 		this.phone = phone;
 	}
 
-	
-
 	public NhaDatAll(int id, String listId, boolean owner, String subject, String subjectLowerCase, String dateUpload,
 			String listTime, String accountName, String body, String address, String wardName, String areaName,
 			int region, String regionName, String price, String priceString, int rooms, String catalogyName,
-			String phone, String typeName, Date dateUploadConvert) {
+			String phone, String typeName, Date dateUploadConvert, String direction, String propertyLegalDocument,
+			String propertyRoadCondition) {
 		super();
 		this.id = id;
 		this.listId = listId;
@@ -283,16 +315,24 @@ public class NhaDatAll {
 		this.phone = phone;
 		this.typeName = typeName;
 		this.dateUploadConvert = dateUploadConvert;
+		this.direction = direction;
+		this.propertyLegalDocument = propertyLegalDocument;
+		this.propertyRoadCondition = propertyRoadCondition;
 	}
 
 	@Override
 	public String toString() {
 		return "NhaDatAll [id=" + id + ", listId=" + listId + ", owner=" + owner + ", subject=" + subject
-				+ ", dateUpload=" + dateUpload + ", listTime=" + listTime + ", accountName=" + accountName + ", body="
-				+ body + ", address=" + address + ", wardName=" + wardName + ", areaName=" + areaName + ", region="
-				+ region + ", regionName=" + regionName + ", price=" + price + ", priceString=" + priceString
-				+ ", rooms=" + rooms + ", categoryname=" + catalogyName + ", phone=" + phone + ", typeName=" + typeName
-				+ ", dateUploadConvert=" + dateUploadConvert + "]";
+				+ ", subjectLowerCase=" + subjectLowerCase + ", dateUpload=" + dateUpload + ", listTime=" + listTime
+				+ ", accountName=" + accountName + ", body=" + body + ", address=" + address + ", wardName=" + wardName
+				+ ", areaName=" + areaName + ", region=" + region + ", regionName=" + regionName + ", price=" + price
+				+ ", priceString=" + priceString + ", rooms=" + rooms + ", catalogyName=" + catalogyName + ", phone="
+				+ phone + ", typeName=" + typeName + ", dateUploadConvert=" + dateUploadConvert + ", direction="
+				+ direction + ", propertyLegalDocument=" + propertyLegalDocument + ", propertyRoadCondition="
+				+ propertyRoadCondition + "]";
 	}
+
+	
+
 
 }

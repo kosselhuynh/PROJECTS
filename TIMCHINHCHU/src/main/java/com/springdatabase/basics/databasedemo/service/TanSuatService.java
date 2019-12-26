@@ -1,5 +1,6 @@
 package com.springdatabase.basics.databasedemo.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -93,14 +94,15 @@ public class TanSuatService {
 	}
 
 	public List<TanSuat> findAll_Where_listSDTCO_100Percent(List<SDTCO> listSDTCO_100Percent) {
-		List<TanSuat> listResult = null;
+		List<TanSuat> listResult = new ArrayList<TanSuat>();
 		for (SDTCO sdtco : listSDTCO_100Percent) {
 			List<TanSuat> results;
 			TypedQuery<TanSuat> namedQuery;
 			try {
 				namedQuery = entityManager.createQuery("Select nd from TanSuat nd where nd.phone = '" + sdtco.getPhone()+ "'", TanSuat.class);
 				results = namedQuery.getResultList();
-				listResult.addAll(results);
+				if(results != null)
+					listResult.addAll(results);
 			}catch (NoResultException e) {
 				return null;
 			}

@@ -63,21 +63,21 @@ public class NhaDatService {
 	}
 	
 	public List<NhaDat> findAll_where_Top100() {
-		TypedQuery<NhaDat> namedQuery = entityManager.createQuery("Select f from NhaDat f", NhaDat.class);
+		TypedQuery<NhaDat> namedQuery = entityManager.createQuery("Select f from NhaDat f order by f.dateUploadConvert desc", NhaDat.class);
 		namedQuery.setMaxResults(100);
 		List<NhaDat> resultList = namedQuery.getResultList();
 		return resultList;
 	}
 
 	public List<NhaDat> findAll_where_Top100_With_RegionName(String region) {
-		TypedQuery<NhaDat> namedQuery = entityManager.createQuery("Select f from NhaDat f where f.regionName  = '"+region+"'", NhaDat.class);
+		TypedQuery<NhaDat> namedQuery = entityManager.createQuery("Select f from NhaDat f where f.regionName  = '"+region+"' order by f.dateUploadConvert desc", NhaDat.class);
 		namedQuery.setMaxResults(100);
 		List<NhaDat> resultList = namedQuery.getResultList();
 		return resultList;
 	}
 
 	public List<NhaDat> findAll_where_Top100_With_RegionNameAreaName(String tinhthanhpho, String quanhuyen) {
-		TypedQuery<NhaDat> namedQuery = entityManager.createQuery("Select f from NhaDat f where f.regionName  = '"+tinhthanhpho+"' and f.areaName = '" +quanhuyen+"'", NhaDat.class);
+		TypedQuery<NhaDat> namedQuery = entityManager.createQuery("Select f from NhaDat f where f.regionName  = '"+tinhthanhpho+"' and f.areaName = '" +quanhuyen+"' order by f.dateUploadConvert desc", NhaDat.class);
 		namedQuery.setMaxResults(100);
 		List<NhaDat> resultList = namedQuery.getResultList();
 		return resultList;
@@ -85,7 +85,7 @@ public class NhaDatService {
 
 	public List<NhaDat> findAll_where_Top100_With_RegionNameAreaNameCatalogyName(String tinhthanhpho, String quanhuyen,
 			String chuyenmuc) {
-		TypedQuery<NhaDat> namedQuery = entityManager.createQuery("Select f from NhaDat f where f.regionName  = '"+tinhthanhpho+"' and f.areaName = '" +quanhuyen+"' and f.catalogyName = '"+chuyenmuc+"'", NhaDat.class);
+		TypedQuery<NhaDat> namedQuery = entityManager.createQuery("Select f from NhaDat f where f.regionName  = '"+tinhthanhpho+"' and f.areaName = '" +quanhuyen+"' and f.catalogyName = '"+chuyenmuc+"' order by f.dateUploadConvert desc", NhaDat.class);
 		namedQuery.setMaxResults(100);
 		List<NhaDat> resultList = namedQuery.getResultList();
 		return resultList;
@@ -93,14 +93,14 @@ public class NhaDatService {
 
 	public List<NhaDat> findAll_where_Top100_With_RegionNameAreaNameCatalogyNameTypeName(String tinhthanhpho,
 			String quanhuyen, String chuyenmuc, String loai) {
-		TypedQuery<NhaDat> namedQuery = entityManager.createQuery("Select f from NhaDat f where f.regionName  = '"+tinhthanhpho+"' and f.areaName = '" +quanhuyen+"' and f.catalogyName = '"+chuyenmuc+"' and f.typeName ='" +loai+ "'", NhaDat.class);
+		TypedQuery<NhaDat> namedQuery = entityManager.createQuery("Select f from NhaDat f where f.regionName  = '"+tinhthanhpho+"' and f.areaName = '" +quanhuyen+"' and f.catalogyName = '"+chuyenmuc+"' and f.typeName ='" +loai+ "' order by f.dateUploadConvert desc", NhaDat.class);
 		namedQuery.setMaxResults(100);
 		List<NhaDat> resultList = namedQuery.getResultList();
 		return resultList;
 	}
 
 	public List<NhaDat> findAll_where_Top100_With_TuTimKiem(String tutimkiem) {
-		TypedQuery<NhaDat> namedQuery = entityManager.createQuery("Select f from NhaDat f where f.subjectLowerCase like '%" +tutimkiem+ "%'", NhaDat.class);
+		TypedQuery<NhaDat> namedQuery = entityManager.createQuery("Select f from NhaDat f where f.subjectLowerCase like '%" +tutimkiem+ "%' order by f.dateUploadConvert desc", NhaDat.class);
 		namedQuery.setMaxResults(100);
 		List<NhaDat> resultList = namedQuery.getResultList();
 		return resultList;
@@ -108,7 +108,7 @@ public class NhaDatService {
 
 	public List<NhaDat> findAll_where_Top100_With_RegionNameAreaNameCatalogyNameTypeNameTuTimKiem(String tinhthanhpho,
 			String quanhuyen, String chuyenmuc, String loai, String tutimkiem) {
-		TypedQuery<NhaDat> namedQuery = entityManager.createQuery("Select f from NhaDat f where f.regionName  = '"+tinhthanhpho+"' and f.areaName = '" +quanhuyen+"' and f.catalogyName = '"+chuyenmuc+"' and f.typeName ='" +loai+ "' and f.subjectLowerCase '%"+tutimkiem+ "%'", NhaDat.class);
+		TypedQuery<NhaDat> namedQuery = entityManager.createQuery("Select f from NhaDat f where f.regionName  = '"+tinhthanhpho+"' and f.areaName = '" +quanhuyen+"' and f.catalogyName = '"+chuyenmuc+"' and f.typeName ='" +loai+ "' and f.subjectLowerCase '%"+tutimkiem+ "%' order by f.dateUploadConvert desc", NhaDat.class);
 		namedQuery.setMaxResults(100);
 		List<NhaDat> resultList = namedQuery.getResultList();
 		return resultList;

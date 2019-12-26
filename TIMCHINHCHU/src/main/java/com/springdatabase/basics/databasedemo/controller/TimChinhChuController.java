@@ -119,7 +119,7 @@ public class TimChinhChuController {
 	     List<SDTCO> sdtCO = sdtCOService.findAll();
 	     FileWriter fw = new FileWriter(file);
 	      for (SDTCO sdt : sdtCO) {
-	    	  fw.write("insert into SDT_CO (phone, phan_tram) values ('" + sdt.getPhone() + "'," + sdt.getPhanTram() +  ")" + "\n");
+	    	  fw.write("insert into SDT_CO (phone, phan_tram) values ('" + sdt.getPhone() + "'," + sdt.getPhanTram() +  ");" + "\n");
 	      }
 	      fw.close();
 	      byte[] data = FileUtils.readFileToByteArray(file);
