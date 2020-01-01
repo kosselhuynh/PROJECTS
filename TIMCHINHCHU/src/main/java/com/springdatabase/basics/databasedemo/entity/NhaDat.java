@@ -2,12 +2,15 @@ package com.springdatabase.basics.databasedemo.entity;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
@@ -81,8 +84,29 @@ public class NhaDat {
 	@Column(name = "property_road_condition")
 	private String propertyRoadCondition;
 	
+	private int sobaidang;
+	
+	private int songay;
+		
 	
 	
+
+	public int getSobaidang() {
+		return sobaidang;
+	}
+
+	public void setSobaidang(int sobaidang) {
+		this.sobaidang = sobaidang;
+	}
+
+	public int getSongay() {
+		return songay;
+	}
+
+	public void setSongay(int songay) {
+		this.songay = songay;
+	}
+
 	public String getDirection() {
 		return direction;
 	}

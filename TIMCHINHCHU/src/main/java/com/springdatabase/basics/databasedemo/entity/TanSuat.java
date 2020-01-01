@@ -1,11 +1,14 @@
 package com.springdatabase.basics.databasedemo.entity;
 
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -31,6 +34,8 @@ public class TanSuat {
 	@Column(name = "tan_suat")
 	private double  tanSuat;//tanSuat = soLanDangBai/soNgay
 
+	
+	
 	public String getPhone() {
 		return phone;
 	}

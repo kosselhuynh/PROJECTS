@@ -35,10 +35,12 @@ import com.springdatabase.basics.databasedemo.entity.Contact;
 import com.springdatabase.basics.databasedemo.entity.Files;
 import com.springdatabase.basics.databasedemo.entity.NhaDat;
 import com.springdatabase.basics.databasedemo.entity.SDTCO;
+import com.springdatabase.basics.databasedemo.entity.TanSuat;
 import com.springdatabase.basics.databasedemo.restcontroller.NhatDatRestController;
 import com.springdatabase.basics.databasedemo.service.FilesService;
 import com.springdatabase.basics.databasedemo.service.NhaDatService;
 import com.springdatabase.basics.databasedemo.service.SDTCOService;
+import com.springdatabase.basics.databasedemo.service.TanSuatService;
 import com.springdatabase.basics.databasedemo.service.TrendingService;
 
 @Controller
@@ -53,16 +55,105 @@ public class TimChinhChuController {
 	NhatDatRestController nhaDatRestController;
 	@Autowired
 	SDTCOService sdtCOService;
+	@Autowired
+	TanSuatService tanSuatService;
 	
 	@Autowired
 	NhaDatService nhadatService;
 	public static Map<Integer,String> tinhTP = new LinkedHashMap<Integer,String>();
 
+	@RequestMapping(value = {"","/","index"})
+	public String index(Model model, HttpServletRequest request) {
+		model.addAttribute("tongsotin", nhadatService.count_All());
+		model.addAttribute("sotinhochiminh", nhadatService.count_Where_RegionName("Tp Hồ Chí Minh"));
+		model.addAttribute("sotinhanoi", nhadatService.count_Where_RegionName("Hà Nội"));
+		model.addAttribute("sotindanang", nhadatService.count_Where_RegionName("Đà Nẵng"));
+		
+		
+
+		return "index";
+	}
 	
-	@RequestMapping(value = {"","/","files"})
-	public String persons(Model model, HttpServletRequest request) {
+	@RequestMapping(value = {"danhsachtin_hochiminh"})
+	public String danhsachtin_hochiminh(Model model, HttpServletRequest request) {
+		nhaDatRestController.tinhthanhpho = Utils.tphochiminh;
+		List<NhaDat> arrayNhaDat = new ArrayList<NhaDat>();
+		arrayNhaDat = nhadatService.findAll_With_RegionName(Utils.tphochiminh);
+		//Loai nha dat gom 4 loai : Can mua, can ban, can thue, cho thue
+		List<NhaDat> arrayNhatDat_CanBan = new ArrayList<NhaDat>();
+		List<NhaDat> arrayNhatDat_CanMua = new ArrayList<NhaDat>();
+		List<NhaDat> arrayNhatDat_ChoThue = new ArrayList<NhaDat>();
+		List<NhaDat> arrayNhatDat_CanThue = new ArrayList<NhaDat>();
+		for (NhaDat nhaDat : arrayNhaDat) {
+			if(StringUtils.equals(nhaDat.getTypeName(), "Cần bán")){
+				arrayNhatDat_CanBan.add(nhaDat);
+			}
+			if(StringUtils.equals(nhaDat.getTypeName(), "Cần mua")){
+				arrayNhatDat_CanMua.add(nhaDat);
+			}
+			if(StringUtils.equals(nhaDat.getTypeName(), "Cho thuê")){
+				arrayNhatDat_ChoThue.add(nhaDat);
+			}
+			if(StringUtils.equals(nhaDat.getTypeName(), "Cần thuê")){
+				arrayNhatDat_CanThue.add(nhaDat);
+			}
+		}
+		model.addAttribute("arrayNhatDat_CanBan", Utils.createLoaiNhaDat_CanBan(arrayNhatDat_CanBan));
+		model.addAttribute("arrayNhatDat_CanMua", Utils.createLoaiNhaDat_CanMua(arrayNhatDat_CanMua));
+		model.addAttribute("arrayNhatDat_ChoThue", Utils.createLoaiNhaDat_ChoThue(arrayNhatDat_ChoThue));
+		model.addAttribute("arrayNhatDat_CanThue", Utils.createLoaiNhaDat_CanThue(arrayNhatDat_CanThue));
 		Utils.createtinhTP(tinhTP);
 		model.addAttribute("tinhTP", tinhTP);
+		model.addAttribute("regionName", Utils.tphochiminh);
+		model.addAttribute("listAreaName", Utils.createWardName(arrayNhaDat));//Chọn quận huyện ...
+		model.addAttribute("quanhuyen", "Chọn quận huyện ...");
+		model.addAttribute("loai", "Chọn loại ...");
+		return "danhsachtin";
+	}
+	
+	@RequestMapping(value = {"danhsachtin_hanoi"})
+	public String danhsachtin_hanoi(Model model, HttpServletRequest request) {
+		nhaDatRestController.tinhthanhpho = Utils.tphanoi;
+		List<NhaDat> arrayNhaDat = new ArrayList<NhaDat>();
+		arrayNhaDat = nhadatService.findAll_With_RegionName(Utils.tphanoi);
+		//Loai nha dat gom 4 loai : Can mua, can ban, can thue, cho thue
+		List<NhaDat> arrayNhatDat_CanBan = new ArrayList<NhaDat>();
+		List<NhaDat> arrayNhatDat_CanMua = new ArrayList<NhaDat>();
+		List<NhaDat> arrayNhatDat_ChoThue = new ArrayList<NhaDat>();
+		List<NhaDat> arrayNhatDat_CanThue = new ArrayList<NhaDat>();
+		for (NhaDat nhaDat : arrayNhaDat) {
+			if(StringUtils.equals(nhaDat.getTypeName(), "Cần bán")){
+				arrayNhatDat_CanBan.add(nhaDat);
+			}
+			if(StringUtils.equals(nhaDat.getTypeName(), "Cần mua")){
+				arrayNhatDat_CanMua.add(nhaDat);
+			}
+			if(StringUtils.equals(nhaDat.getTypeName(), "Cho thuê")){
+				arrayNhatDat_ChoThue.add(nhaDat);
+			}
+			if(StringUtils.equals(nhaDat.getTypeName(), "Cần thuê")){
+				arrayNhatDat_CanThue.add(nhaDat);
+			}
+		}
+		model.addAttribute("arrayNhatDat_CanBan", Utils.createLoaiNhaDat_CanBan(arrayNhatDat_CanBan));
+		model.addAttribute("arrayNhatDat_CanMua", Utils.createLoaiNhaDat_CanMua(arrayNhatDat_CanMua));
+		model.addAttribute("arrayNhatDat_ChoThue", Utils.createLoaiNhaDat_ChoThue(arrayNhatDat_ChoThue));
+		model.addAttribute("arrayNhatDat_CanThue", Utils.createLoaiNhaDat_CanThue(arrayNhatDat_CanThue));
+		Utils.createtinhTP(tinhTP);
+		model.addAttribute("tinhTP", tinhTP);
+		model.addAttribute("regionName", Utils.tphanoi);
+		model.addAttribute("listAreaName", Utils.createWardName(arrayNhaDat));//Quan Huyen
+		model.addAttribute("quanhuyen", "Chọn quận huyện ...");//Chọn loại ...
+		model.addAttribute("loai", "Chọn loại ...");
+		return "danhsachtin";
+	}
+	
+	@RequestMapping(value = {"files"})
+	public String persons(Model model, HttpServletRequest request) {
+		Utils.createtinhTP(tinhTP);
+		
+		model.addAttribute("tinhTP", tinhTP);
+		model.addAttribute("tongsotin", nhadatService.findAll().size());
 		
 		return "timchinhchu";
 	}
@@ -72,10 +163,34 @@ public class TimChinhChuController {
 		if(i < 100) {
 			List<NhaDat> arrayNhaDat = new ArrayList<NhaDat>();
 			arrayNhaDat = nhadatService.findAll_With_RegionName(tinhTP.get(i));
-			model.addAttribute("listTypeName", Utils.createTypeName(arrayNhaDat));
-			model.addAttribute("listCatalogyName", Utils.createCatalogyName(arrayNhaDat));
-			model.addAttribute("listAreaName", Utils.createWardName(arrayNhaDat));
-			model.addAttribute("tinhTP", tinhTP);
+			//Loai nha dat gom 4 loai : Can mua, can ban, can thue, cho thue
+			List<NhaDat> arrayNhatDat_CanBan = new ArrayList<NhaDat>();
+			List<NhaDat> arrayNhatDat_CanMua = new ArrayList<NhaDat>();
+			List<NhaDat> arrayNhatDat_ChoThue = new ArrayList<NhaDat>();
+			List<NhaDat> arrayNhatDat_CanThue = new ArrayList<NhaDat>();
+			for (NhaDat nhaDat : arrayNhaDat) {
+				if(StringUtils.equals(nhaDat.getTypeName(), "Cần bán")){
+					arrayNhatDat_CanBan.add(nhaDat);
+				}
+				if(StringUtils.equals(nhaDat.getTypeName(), "Cần mua")){
+					arrayNhatDat_CanMua.add(nhaDat);
+				}
+				if(StringUtils.equals(nhaDat.getTypeName(), "Cho thuê")){
+					arrayNhatDat_ChoThue.add(nhaDat);
+				}
+				if(StringUtils.equals(nhaDat.getTypeName(), "Cần thuê")){
+					arrayNhatDat_CanThue.add(nhaDat);
+				}
+			}
+			model.addAttribute("arrayNhatDat_CanBan", Utils.createLoaiNhaDat_CanBan(arrayNhatDat_CanBan));
+			model.addAttribute("arrayNhatDat_CanMua", Utils.createLoaiNhaDat_CanMua(arrayNhatDat_CanMua));
+			model.addAttribute("arrayNhatDat_ChoThue", Utils.createLoaiNhaDat_ChoThue(arrayNhatDat_ChoThue));
+			model.addAttribute("arrayNhatDat_CanThue", Utils.createLoaiNhaDat_CanThue(arrayNhatDat_CanThue));
+			
+			model.addAttribute("listTypeName", Utils.createTypeName(arrayNhaDat));//Can mua, Can ban
+			model.addAttribute("listCatalogyName", Utils.createCatalogyName(arrayNhaDat));//Chuyen muc (Nha o, chung cu,...)
+			model.addAttribute("listAreaName", Utils.createWardName(arrayNhaDat));//Quan Huyen
+			model.addAttribute("tinhTP", tinhTP);//Tinh TP
 			
 		}else {
 			SDTCO sdtCo = new SDTCO();
@@ -85,7 +200,8 @@ public class TimChinhChuController {
 		//	return "redirect:timchinhchu";
 		}
 		model.addAttribute("khuvuc", tinhTP.get(i));
-		return "timchinhchu";
+		model.addAttribute("tongsotin", nhadatService.count_All());
+		return "danhsachtin";
 		
 	}
 	
@@ -94,30 +210,59 @@ public class TimChinhChuController {
 	
 	@GetMapping("actionFormSearch")
 	public String formSearch(@RequestParam("tinhthanhpho") String tinhthanhpho, @RequestParam("quanhuyen") String quanhuyen, 
-			@RequestParam("chuyenmuc") String chuyenmuc, @RequestParam("tutimkiem") String tutimkiem, @RequestParam("loai") String loai,
+			 @RequestParam("tutimkiem") String tutimkiem, @RequestParam("loai") String loai,
 			Model model) {
 		nhaDatRestController.tinhthanhpho = StringUtils.trim(tinhthanhpho);
 		nhaDatRestController.quanhuyen = StringUtils.trim(quanhuyen);
-		nhaDatRestController.chuyenmuc = StringUtils.trim(chuyenmuc);
 		nhaDatRestController.loai = StringUtils.trim(loai);
 		nhaDatRestController.tutimkiem = StringUtils.trim(tutimkiem.toLowerCase());
 		
+		List<NhaDat> arrayNhaDat = new ArrayList<NhaDat>();
+		arrayNhaDat = nhadatService.findAll_With_RegionName(tinhthanhpho);
+		//Loai nha dat gom 4 loai : Can mua, can ban, can thue, cho thue
+		List<NhaDat> arrayNhatDat_CanBan = new ArrayList<NhaDat>();
+		List<NhaDat> arrayNhatDat_CanMua = new ArrayList<NhaDat>();
+		List<NhaDat> arrayNhatDat_ChoThue = new ArrayList<NhaDat>();
+		List<NhaDat> arrayNhatDat_CanThue = new ArrayList<NhaDat>();
+		for (NhaDat nhaDat : arrayNhaDat) {
+			if(StringUtils.equals(nhaDat.getTypeName(), "Cần bán")){
+				arrayNhatDat_CanBan.add(nhaDat);
+			}
+			if(StringUtils.equals(nhaDat.getTypeName(), "Cần mua")){
+				arrayNhatDat_CanMua.add(nhaDat);
+			}
+			if(StringUtils.equals(nhaDat.getTypeName(), "Cho thuê")){
+				arrayNhatDat_ChoThue.add(nhaDat);
+			}
+			if(StringUtils.equals(nhaDat.getTypeName(), "Cần thuê")){
+				arrayNhatDat_CanThue.add(nhaDat);
+			}
+		}
+		model.addAttribute("arrayNhatDat_CanBan", Utils.createLoaiNhaDat_CanBan(arrayNhatDat_CanBan));
+		model.addAttribute("arrayNhatDat_CanMua", Utils.createLoaiNhaDat_CanMua(arrayNhatDat_CanMua));
+		model.addAttribute("arrayNhatDat_ChoThue", Utils.createLoaiNhaDat_ChoThue(arrayNhatDat_ChoThue));
+		model.addAttribute("arrayNhatDat_CanThue", Utils.createLoaiNhaDat_CanThue(arrayNhatDat_CanThue));
+		
+		model.addAttribute("regionName", tinhthanhpho);
+		model.addAttribute("listAreaName", Utils.createWardName(arrayNhaDat));//Quan Huyen
+		
 		Utils.createtinhTP(tinhTP);
 		model.addAttribute("tinhTP", tinhTP);
-		return "timchinhchu";
+		model.addAttribute("tongsotin", nhadatService.count_All());//quanhuyen
+		model.addAttribute("quanhuyen", quanhuyen);
+		model.addAttribute("loai", loai);
+		return "danhsachtin";
 	}
 	
 
 	
-	@RequestMapping(value = "backupdb", method = RequestMethod.GET)
-	public ResponseEntity<InputStreamResource> backupdb(HttpServletRequest request) throws IOException{
+	@RequestMapping(value = "backupsdtco", method = RequestMethod.GET)
+	public ResponseEntity<InputStreamResource> backupsdtco(HttpServletRequest request) throws IOException{
 		HttpHeaders responseHeader = new HttpHeaders();
 	    try {
 	      File file = ResourceUtils.getFile("classpath:file/sdtco.txt");
-	//      FileWriter fw = new FileWriter(file);
-	     
-	     List<SDTCO> sdtCO = sdtCOService.findAll();
-	     FileWriter fw = new FileWriter(file);
+	      List<SDTCO> sdtCO = sdtCOService.findAll();
+	      FileWriter fw = new FileWriter(file);
 	      for (SDTCO sdt : sdtCO) {
 	    	  fw.write("insert into SDT_CO (phone, phan_tram) values ('" + sdt.getPhone() + "'," + sdt.getPhanTram() +  ");" + "\n");
 	      }
@@ -134,9 +279,35 @@ public class TimChinhChuController {
 	    } catch (Exception ex) {
 	      return new ResponseEntity<InputStreamResource>(null, responseHeader, HttpStatus.INTERNAL_SERVER_ERROR);
 	    }
+	   
 	  }
 		
-	
+	@RequestMapping(value = "backuptansuat", method = RequestMethod.GET)
+	public ResponseEntity<InputStreamResource> backuptansuat(HttpServletRequest request) throws IOException{
+		HttpHeaders responseHeader = new HttpHeaders();
+	    try {
+		      File file = ResourceUtils.getFile("classpath:file/tansuat.txt");
+		      List<TanSuat> tanSuat = tanSuatService.findAll();
+		      FileWriter fw = new FileWriter(file);
+		      for (TanSuat ts : tanSuat) {
+		    	  fw.write("insert into TAN_SUAT (phone, first_date, last_date, so_lan_dang_bai, so_ngay, tan_suat) values ('" +
+		      ts.getPhone() + "','" + ts.getFirstDate() + "','" + ts.getLastDate() + "'," + 
+		    			  ts.getSoLanDangBai() + "," + ts.getSoNgay() + "," + ts.getTanSuat() +  ");" + "\n");
+		      }
+		      fw.close();
+		      byte[] data = FileUtils.readFileToByteArray(file);
+		      // Set mimeType trả về
+		      responseHeader.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+		      // Thiết lập thông tin trả về
+		      responseHeader.set("Content-disposition", "attachment; filename=" + file.getName());
+		      responseHeader.setContentLength(data.length);
+		      InputStream inputStream = new BufferedInputStream(new ByteArrayInputStream(data));
+		      InputStreamResource inputStreamResource1 = new InputStreamResource(inputStream);
+		      return new ResponseEntity<InputStreamResource>(inputStreamResource1, responseHeader, HttpStatus.OK);
+		    } catch (Exception ex) {
+		      return new ResponseEntity<InputStreamResource>(null, responseHeader, HttpStatus.INTERNAL_SERVER_ERROR);
+		    }
+	  }
 	
 	
 	
@@ -156,11 +327,11 @@ public class TimChinhChuController {
 
 	
 
-	@RequestMapping("contact")
+	@RequestMapping("userdashboard")
 	public String contact(Model model) {
-		Contact contact = new Contact();
-		model.addAttribute("contact", contact);
-		return "contact";
+	//	Contact contact = new Contact();
+	//	model.addAttribute("contact", contact);
+		return "userdashboard";
 	}
 
 	@RequestMapping("upload")

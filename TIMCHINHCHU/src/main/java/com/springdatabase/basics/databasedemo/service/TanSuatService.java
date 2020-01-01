@@ -104,7 +104,7 @@ public class TanSuatService {
 				if(results != null)
 					listResult.addAll(results);
 			}catch (NoResultException e) {
-				return null;
+				//return null;
 			}
 		}
 		return listResult;
@@ -114,7 +114,7 @@ public class TanSuatService {
 		List<TanSuat> result;
 		TypedQuery<TanSuat> namedQuery;
 		try {
-			namedQuery = entityManager.createQuery("Select nd from TanSuat nd where nd.tanSuat >= " +avgTanSuat+ "'", TanSuat.class);
+			namedQuery = entityManager.createQuery("Select nd from TanSuat nd where nd.tanSuat >= " +avgTanSuat, TanSuat.class);
 			result = namedQuery.getResultList();
 		}catch (NoResultException e) {
 			return null;

@@ -73,67 +73,121 @@ public class NhatDatRestController {
 		
 		//TAM BO VI NANG WEB
 		if (StringUtils.equals(tinhthanhpho, "Toàn quốc") && StringUtils.equals(quanhuyen, "Chọn quận huyện ...")
-				&& StringUtils.equals(chuyenmuc, "Chọn chuyên mục ...") && StringUtils.equals(loai, "Chọn loại ...")
-				&& StringUtils.isBlank(tutimkiem)) {
+				&& StringUtils.equals(loai, "Chọn loại ...") && StringUtils.isBlank(tutimkiem)) {
 			// Find All 100 Top new
-	//		listSortNhaDat = nhaDatService.findAll_where_Top100();
-		//	Utils.sortByDate(listSortNhaDat);
-			return listSortNhaDat;
+			listSortNhaDat = nhaDatService.findAll_where_Top100();
+		//	return listSortNhaDat;
 		}
-		if (!StringUtils.equals(tinhthanhpho, "Toàn quốc") && StringUtils.equals(quanhuyen, "Chọn quận huyện ...")
-				&& StringUtils.equals(chuyenmuc, "Chọn chuyên mục ...") && StringUtils.equals(loai, "Chọn loại ...")
-				&& StringUtils.isBlank(tutimkiem)) {
+		if (!StringUtils.equals(tinhthanhpho, "Toàn quốc") 
+				&& (StringUtils.equals(quanhuyen, "Chọn quận huyện ...") || StringUtils.isBlank(quanhuyen))
+				&& (StringUtils.equals(loai, "Chọn loại ...") || StringUtils.isBlank(loai))
+				&& (StringUtils.isBlank(tutimkiem) || StringUtils.isBlank(tutimkiem))) {
 			// Find All 100 Top new where region_name = tinhthanhpho
 			listSortNhaDat = nhaDatService.findAll_where_Top100_With_RegionName(tinhthanhpho);
-		//	Utils.sortByDate(listSortNhaDat);
-			return listSortNhaDat;
+		//	return listSortNhaDat;
 		}
 		if (!StringUtils.equals(tinhthanhpho, "Toàn quốc") && !StringUtils.equals(quanhuyen, "Chọn quận huyện ...")
-				&& StringUtils.equals(chuyenmuc, "Chọn chuyên mục ...") && StringUtils.equals(loai, "Chọn loại ...")
-				&& StringUtils.isBlank(tutimkiem)) {
+				&& StringUtils.equals(loai, "Chọn loại ...") && StringUtils.isBlank(tutimkiem)) {
 			// Find All 100 Top new where region_name = tinhthanhpho and area_name =
 			// quanhuyen
 			listSortNhaDat = nhaDatService.findAll_where_Top100_With_RegionNameAreaName(tinhthanhpho, quanhuyen);
-		//	Utils.sortByDate(listSortNhaDat);
-			return listSortNhaDat;
+		//	return listSortNhaDat;
 		}
 		if (!StringUtils.equals(tinhthanhpho, "Toàn quốc") && !StringUtils.equals(quanhuyen, "Chọn quận huyện ...")
-				&& !StringUtils.equals(chuyenmuc, "Chọn chuyên mục ...")
-				&& StringUtils.equals(loai, "Chọn loại ...") && StringUtils.isBlank(tutimkiem)) {
-			// Find All 100 Top new where region_name = tinhthanhpho and area_name =
-			// quanhuyen and TypeName = chuyenmuc
-			listSortNhaDat = nhaDatService.findAll_where_Top100_With_RegionNameAreaNameCatalogyName(tinhthanhpho,
-					quanhuyen, chuyenmuc);
-		//	Utils.sortByDate(listSortNhaDat);
-			return listSortNhaDat;
-		}
-		if (!StringUtils.equals(tinhthanhpho, "Toàn quốc") && !StringUtils.equals(quanhuyen, "Chọn quận huyện ...")
-				&& !StringUtils.equals(chuyenmuc, "Chọn chuyên mục ...")
 				&& !StringUtils.equals(loai, "Chọn loại ...") && StringUtils.isBlank(tutimkiem)) {
 			// Find All 100 Top new where region_name = tinhthanhpho and area_name =
 			// quanhuyen and TypeName = chuyenmuc
-			listSortNhaDat = nhaDatService.findAll_where_Top100_With_RegionNameAreaNameCatalogyNameTypeName(
-					tinhthanhpho, quanhuyen, chuyenmuc, loai);
-		//	Utils.sortByDate(listSortNhaDat);
-			return listSortNhaDat;
+			//Xu ly loai
+			try {
+			String[] mString = loai.split("-");
+			if(mString.length > 2) {//Co 3 phan tu
+				String type = mString[0];
+				String cata = mString[1];
+				String road = mString[2];
+				listSortNhaDat = nhaDatService.findAll_where_Top100_With_RegionNameAreaNameCatalogyNameTypeNamePROPERTY_ROAD_CONDITION(tinhthanhpho,
+						quanhuyen, cata, type, road);
+			//	return listSortNhaDat;
+			}else {
+				String type = mString[0];
+				String cata = mString[1];
+				listSortNhaDat = nhaDatService.findAll_where_Top100_With_RegionNameAreaNameCatalogyNameTypeName(tinhthanhpho,
+						quanhuyen, cata, type);
+			//	return listSortNhaDat;
+			}
+			}catch(Exception ex) {
+				
+			}
 		}
+		
 		if (!StringUtils.equals(tinhthanhpho, "Toàn quốc") && !StringUtils.equals(quanhuyen, "Chọn quận huyện ...")
-				&& !StringUtils.equals(chuyenmuc, "Chọn chuyên mục ...")
 				&& !StringUtils.equals(loai, "Chọn loại ...") && !StringUtils.isBlank(tutimkiem)) {
 			// Find All 100 Top new where region_name = tinhthanhpho and area_name =
 			// quanhuyen and TypeName = chuyenmuc
-			listSortNhaDat = nhaDatService.findAll_where_Top100_With_RegionNameAreaNameCatalogyNameTypeNameTuTimKiem(
-					tinhthanhpho, quanhuyen, chuyenmuc, loai, tutimkiem);
-		//	Utils.sortByDate(listSortNhaDat);
-			return listSortNhaDat;
-		} else if (!StringUtils.isBlank(tutimkiem)) {
+			try {
+				String[] mString = loai.split("-");
+				if(mString.length > 2) {//Co 3 phan tu
+					String type = mString[0];
+					String cata = mString[1];
+					String road = mString[2];
+					listSortNhaDat = nhaDatService.findAll_where_Top100_With_RegionNameAreaNameCatalogyNameTypeNamePROPERTY_ROAD_CONDITIONTuTimKiem(tinhthanhpho,
+							quanhuyen, cata, type, road, tutimkiem);
+			//		return listSortNhaDat;
+				}else {
+					String type = mString[0];
+					String cata = mString[1];
+					listSortNhaDat = nhaDatService.findAll_where_Top100_With_RegionNameAreaNameCatalogyNameTypeNameTuTimKiem(tinhthanhpho,
+							quanhuyen, cata, type, tutimkiem);
+			//		return listSortNhaDat;
+				}
+				}catch(Exception ex) {
+					
+				}
+			
+
+		//	return listSortNhaDat;
+		} 
+		if (!StringUtils.equals(tinhthanhpho, "Toàn quốc") && StringUtils.equals(quanhuyen, "Chọn quận huyện ...")
+				&& !StringUtils.equals(loai, "Chọn loại ...") && StringUtils.isBlank(tutimkiem)) {
 			// Find All 100 Top new where region_name = tinhthanhpho and area_name =
 			// quanhuyen and TypeName = chuyenmuc
+			try {
+				String[] mString = loai.split("-");
+				if(mString.length > 2) {//Co 3 phan tu
+					String type = mString[0];
+					String cata = mString[1];
+					String road = mString[2];
+					listSortNhaDat = nhaDatService.findAll_where_Top100_With_RegionNameCatalogyNameTypeNamePROPERTY_ROAD_CONDITION(tinhthanhpho,
+							cata, type, road);
+			//		return listSortNhaDat;
+				}else {
+					String type = mString[0];
+					String cata = mString[1];
+					listSortNhaDat = nhaDatService.findAll_where_Top100_With_RegionNameCatalogyNameTypeName(tinhthanhpho,
+							cata, type);
+			//		return listSortNhaDat;
+				}
+				}catch(Exception ex) {
+					
+				}
+			listSortNhaDat = nhaDatService.findAll_where_Top100_With_RegionNameAreaNameCatalogyNameTypeNameTuTimKiem(
+					tinhthanhpho, quanhuyen, chuyenmuc, loai, tutimkiem);
+			
+		//	return listSortNhaDat;
+		} 
+		else if (!StringUtils.isBlank(tutimkiem)) {
+			// Find All 100 Top new where region_name = tinhthanhpho and area_name =
+			// quanhuyen and TypeName = chuyenmuc
+			
 			listSortNhaDat = nhaDatService.findAll_where_Top100_With_TuTimKiem(tutimkiem);
-		//	Utils.sortByDate(listSortNhaDat);
-			return listSortNhaDat;
+			
+		//	return listSortNhaDat;
 		}
-		return nhaDatService.findAll_where_Top100();
+		for (NhaDat nhaDat : listSortNhaDat) {
+			TanSuat tansuat = tanSuatService.getOne_where_Phone(nhaDat.getPhone());
+			nhaDat.setSobaidang(tansuat.getSoLanDangBai());
+			nhaDat.setSongay(tansuat.getSoNgay());
+		}
+		return listSortNhaDat;
 
 	}
 
@@ -151,7 +205,7 @@ public class NhatDatRestController {
 						+ tanSuat.getTanSuat());
 				SDTCO sdtco = new SDTCO();
 				sdtco.setPhone(tanSuat.getPhone());
-				sdtco.setPhanTram(100);
+				sdtco.setPhanTram((int)tanSuat.getTanSuat());
 				listSDTCO10Post.add(sdtco);
 			}
 		}
@@ -159,7 +213,7 @@ public class NhatDatRestController {
 		if (listSDTCO10Post.size() > 0) {
 			sdtCOService.insert(listSDTCO10Post);
 		}
-
+		logger.info("Insert listSDTCO10Post into table SDTCO success voi so luong sdt la : " + listSDTCO10Post.size());
 		// SDT nam trong bang SDTCO
 		// get list
 		List<SDTCO> listSDTCO_100Percent = sdtCOService.findAll();
@@ -177,7 +231,7 @@ public class NhatDatRestController {
 		
 		// get list TAN SUAT co TanSuat > avgTanSuat
 		List<TanSuat> listSDT_TanSuat_Bigger_AVGTanSuat = null;
-		if(avgTanSuat > 0) {
+		if(avgTanSuat > 10) {
 			listSDT_TanSuat_Bigger_AVGTanSuat = tanSuatService
 					.findAll_Where_TanSuat_Bigger_AVGTanSuat(avgTanSuat);
 			logger.info("listSDT_TanSuat_Bigger_AVGTanSuat.size() : " + listSDT_TanSuat_Bigger_AVGTanSuat.size());
@@ -201,16 +255,24 @@ public class NhatDatRestController {
 		if (listSDT_Bigger_AVGTanSuat.size() > 0) {
 			sdtCOService.insert(listSDT_Bigger_AVGTanSuat);
 		}
-		
+		logger.info("Insert listSDT_Bigger_AVGTanSuat into table SDTCO success voi so luong sdt la : " + listSDT_Bigger_AVGTanSuat.size());
 		//Xoa cac tin trong bang NHA DAT co SDT trung voi bang SDTCO
 		List<SDTCO> listSDTCO = sdtCOService.findAll();
+		logger.info("listSDTCO chuan bi de xoa trong bang NHA DAT:" + listSDTCO.size());
 		if(listSDTCO.size() > 0) {
+			logger.info("So luong record Nha Dat ban dau " + nhaDatService.findAll().size());
 			//xoa trong bang NHA DAT
-			nhaDatService.deletePost_haveSDT_inTable_SDTCO(listSDTCO);
+			//Tim sdt co ton tai trong bang NHA DAT K, roi xoa
 			for (SDTCO sdtco : listSDTCO) {
-				logger.info("-------- Deleted bai dang trong bang NHA DAT " + sdtco.getPhone() + "==========");
+				if(nhaDatService.findOne_where_Phone(sdtco.getPhone())) {
+					nhaDatService.deletePost_haveSDT_inTable_SDTCO(sdtco.getPhone());
+					logger.info("-------- Deleted bai dang trong bang NHA DAT " + sdtco.getPhone() + "==========");
+				}else {
+					logger.info("Khong xoa duoc vi khong ton tai sdt nay :" + sdtco.getPhone()+ " trong bang NHA DAT");
+				}
 			}
-			
+		
+			logger.info("So luong record Nha Dat sau khi xoa " + nhaDatService.findAll().size());
 		}
 		logger.info("=== END calAVG_TanSuat_ofSDTCO() ==== ");
 		
@@ -222,7 +284,7 @@ public class NhatDatRestController {
 	public void getDataFromJsonChoTot() {
 		RestTemplate restTemplate = new RestTemplate();
 		// Get list
-		ChoTot chotot = restTemplate.getForObject("https://gateway.chotot.com/v1/public/ad-listing?cg=1000&limit=50",
+		ChoTot chotot = restTemplate.getForObject("https://gateway.chotot.com/v1/public/ad-listing?cg=1000&limit=50&f=p",
 				ChoTot.class);
 		// Get element of list
 		for (int i = 0; i < chotot.getAds().size(); i++) {
@@ -306,9 +368,13 @@ public class NhatDatRestController {
 			
 			if(adParameter.getAd_params().getDirection() != null)
 				nd.setDirection(adParameter.getAd_params().getDirection().getValue());
+			else
+				nd.setDirection("");
 			
 			if(adParameter.getAd_params().getProperty_legal_document() != null)
 				nd.setPropertyLegalDocument(adParameter.getAd_params().getProperty_legal_document().getValue());
+			else
+				nd.setPropertyLegalDocument("");
 			
 			if(adParameter.getAd_params().getProperty_road_condition() != null)
 				nd.setPropertyRoadCondition(adParameter.getAd_params().getProperty_road_condition().getValue());
@@ -354,10 +420,13 @@ public class NhatDatRestController {
 			nd.setSubjectLowerCase(chototAds.getSubject().toLowerCase());
 			if(adParameter.getAd_params().getDirection() != null)
 				nd.setDirection(adParameter.getAd_params().getDirection().getValue());
+			else
+				nd.setDirection("");
 			
 			if(adParameter.getAd_params().getProperty_legal_document() != null)
 				nd.setPropertyLegalDocument(adParameter.getAd_params().getProperty_legal_document().getValue());
-			
+			else
+				nd.setPropertyLegalDocument("");
 			if(adParameter.getAd_params().getProperty_road_condition() != null)
 				nd.setPropertyRoadCondition(adParameter.getAd_params().getProperty_road_condition().getValue());
 			
