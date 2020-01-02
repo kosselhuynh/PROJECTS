@@ -15,6 +15,8 @@ import com.springdatabase.basics.databasedemo.entity.NhaDat;
 import com.springdatabase.basics.databasedemo.entity.TanSuat;
 
 public class Utils {
+	public static String tphochiminh = "Tp Hồ Chí Minh";//444
+	public static String tphanoi = "Hà Nội";
 	
 	public static long calculateBetweenTwoDate(Date d1, Date d2) {
 		long getDaysDiff = 0;
@@ -40,7 +42,7 @@ public class Utils {
 		Collections.sort(listSortNhaDat, new DateComparator());
 	}
 	public static class DateComparator implements Comparator<NhaDat> {
-		public int compare(NhaDat s1, NhaDat s2) {
+		public int compare(NhaDat s2, NhaDat s1) {
 		//	return s2.getListTime().compareTo(s1.getListTime());
 			return s1.getDateUploadConvert().compareTo(s2.getDateUploadConvert());
 		}
@@ -72,9 +74,24 @@ public class Utils {
 			}
 
 		}
-		Collections.sort(listAreaName);
+	//	Collections.sort(listAreaName);
+		
+		Collections.sort(listAreaName, new Comparator<String>() {
+	        public int compare(String o1, String o2) {
+	            return extractInt(o1) - extractInt(o2);
+	        }
+
+	        int extractInt(String s) {
+	            String num = s.replaceAll("\\D", "");
+	            // return 0 if no digits found
+	            return num.isEmpty() ? 0 : Integer.parseInt(num);
+	        }
+	    });
+		
+		
 		return listAreaName;
 	}
+	
 
 	public static List<String> createCatalogyName(List<NhaDat> arrayNhaDat) {
 		List<String> listCatalogyName = new ArrayList<String>();
@@ -99,7 +116,79 @@ public class Utils {
 		Collections.sort(listTypeName);
 		return listTypeName;
 	}
+	public static List<String> createLoaiNhaDat_CanBan(List<NhaDat> arrayNhaDat_CanBan){
+		List<String> listTypeName = new ArrayList<String>();
+		for (int i = 0; i < arrayNhaDat_CanBan.size(); i++) {
+			if(StringUtils.isBlank(arrayNhaDat_CanBan.get(i).getPropertyRoadCondition())) {
+				if (!listTypeName.contains(arrayNhaDat_CanBan.get(i).getTypeName()+"-"+arrayNhaDat_CanBan.get(i).getCatalogyName())) {
+					listTypeName.add(arrayNhaDat_CanBan.get(i).getTypeName()+"-"+arrayNhaDat_CanBan.get(i).getCatalogyName());
+				}
+			}else {
+				if (!listTypeName.contains(arrayNhaDat_CanBan.get(i).getTypeName()+"-"+arrayNhaDat_CanBan.get(i).getCatalogyName()+"-"+arrayNhaDat_CanBan.get(i).getPropertyRoadCondition())) {
+					listTypeName.add(arrayNhaDat_CanBan.get(i).getTypeName()+"-"+arrayNhaDat_CanBan.get(i).getCatalogyName()+"-"+arrayNhaDat_CanBan.get(i).getPropertyRoadCondition());
+				}
+			}
+			
 
+		}
+		Collections.sort(listTypeName);
+		return listTypeName;
+	}
+	public static List<String> createLoaiNhaDat_CanMua(List<NhaDat> arrayNhatDat_CanMua) {
+		List<String> listTypeName = new ArrayList<String>();
+		for (int i = 0; i < arrayNhatDat_CanMua.size(); i++) {
+			if(StringUtils.isBlank(arrayNhatDat_CanMua.get(i).getPropertyRoadCondition())) {
+				if (!listTypeName.contains(arrayNhatDat_CanMua.get(i).getTypeName()+"-"+arrayNhatDat_CanMua.get(i).getCatalogyName())) {
+					listTypeName.add(arrayNhatDat_CanMua.get(i).getTypeName()+"-"+arrayNhatDat_CanMua.get(i).getCatalogyName());
+				}
+			}else {
+				if (!listTypeName.contains(arrayNhatDat_CanMua.get(i).getTypeName()+"-"+arrayNhatDat_CanMua.get(i).getCatalogyName()+"-"+arrayNhatDat_CanMua.get(i).getPropertyRoadCondition())) {
+					listTypeName.add(arrayNhatDat_CanMua.get(i).getTypeName()+"-"+arrayNhatDat_CanMua.get(i).getCatalogyName()+"-"+arrayNhatDat_CanMua.get(i).getPropertyRoadCondition());
+				}
+			}
+			
+
+		}
+		Collections.sort(listTypeName);
+		return listTypeName;
+	}
+	public static List<String> createLoaiNhaDat_ChoThue(List<NhaDat> arrayNhatDat_ChoThue) {
+		List<String> listTypeName = new ArrayList<String>();
+		for (int i = 0; i < arrayNhatDat_ChoThue.size(); i++) {
+			if(StringUtils.isBlank(arrayNhatDat_ChoThue.get(i).getPropertyRoadCondition())) {
+				if (!listTypeName.contains(arrayNhatDat_ChoThue.get(i).getTypeName()+"-"+arrayNhatDat_ChoThue.get(i).getCatalogyName())) {
+					listTypeName.add(arrayNhatDat_ChoThue.get(i).getTypeName()+"-"+arrayNhatDat_ChoThue.get(i).getCatalogyName());
+				}
+			}else {
+				if (!listTypeName.contains(arrayNhatDat_ChoThue.get(i).getTypeName()+"-"+arrayNhatDat_ChoThue.get(i).getCatalogyName()+"-"+arrayNhatDat_ChoThue.get(i).getPropertyRoadCondition())) {
+					listTypeName.add(arrayNhatDat_ChoThue.get(i).getTypeName()+"-"+arrayNhatDat_ChoThue.get(i).getCatalogyName()+"-"+arrayNhatDat_ChoThue.get(i).getPropertyRoadCondition());
+				}
+			}
+			
+
+		}
+		Collections.sort(listTypeName);
+		return listTypeName;
+	}
+
+	public static List<String> createLoaiNhaDat_CanThue(List<NhaDat> arrayNhatDat_CanThue) {
+		List<String> listTypeName = new ArrayList<String>();
+		for (int i = 0; i < arrayNhatDat_CanThue.size(); i++) {
+			if(StringUtils.isBlank(arrayNhatDat_CanThue.get(i).getPropertyRoadCondition())) {
+				if (!listTypeName.contains(arrayNhatDat_CanThue.get(i).getTypeName()+"-"+arrayNhatDat_CanThue.get(i).getCatalogyName())) {
+					listTypeName.add(arrayNhatDat_CanThue.get(i).getTypeName()+"-"+arrayNhatDat_CanThue.get(i).getCatalogyName());
+				}
+			}else {
+				if (!listTypeName.contains(arrayNhatDat_CanThue.get(i).getTypeName()+"-"+arrayNhatDat_CanThue.get(i).getCatalogyName()+"-"+arrayNhatDat_CanThue.get(i).getPropertyRoadCondition())) {
+					listTypeName.add(arrayNhatDat_CanThue.get(i).getTypeName()+"-"+arrayNhatDat_CanThue.get(i).getCatalogyName()+"-"+arrayNhatDat_CanThue.get(i).getPropertyRoadCondition());
+				}
+			}
+			
+
+		}
+		Collections.sort(listTypeName);
+		return listTypeName;
+	}
 //Tao mang
 	public static void createtinhTP(Map<Integer, String> tinhTP) {
 		tinhTP.put(1, "Tp Hồ Chí Minh");
@@ -218,6 +307,10 @@ public class Utils {
 			}
 			return sum/listSDT_TanSuat.size();
 		}
+
+		
+
+		
 
 		
 
