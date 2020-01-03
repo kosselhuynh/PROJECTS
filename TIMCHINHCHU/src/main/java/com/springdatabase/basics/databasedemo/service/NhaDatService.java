@@ -120,11 +120,11 @@ public class NhaDatService {
 	public void deletePost_haveSDT_inTable_SDTCO(String phone) {
 			try {
 			//	javax.persistence.Query namedQuery = entityManager.createQuery("delete NhaDat where phone = '"+phone+"'");
-				javax.persistence.Query namedQuery = entityManager.createNamedQuery("delete NhaDat where phone = '"+phone+"'");
-				namedQuery.executeUpdate();
-				logger.info("Xoa thanh cong record sdt : " + phone);
+				javax.persistence.Query namedQuery = entityManager.createNativeQuery("delete Nha_Dat where phone = '"+phone+"'");
+				int irows = namedQuery.executeUpdate();
+				logger.info("=== XOA THANH CONG CAC RECORD NHA DAT CO SDT LA : " + phone + "SO DONG DA XOA LA = " + irows);
 			}catch (Exception e) {
-				logger.info("Xoa khong thanh cong record sdt : " + phone);
+				logger.info("=== XOA KHONG THANH CONG CAC RECORD NHA DAT CO SDT LA : " + phone);
 			}
 			
 			
@@ -133,16 +133,16 @@ public class NhaDatService {
 	}
 
 	public boolean findOne_where_Phone(String phone) {
-		NhaDat rs = null;
+		List<NhaDat> rs = null;
 		TypedQuery<NhaDat> namedQuery = null;
 		try {
 			namedQuery = entityManager.createQuery("Select s from NhaDat s where s.phone = '" + phone + "'",
 					NhaDat.class);
-			rs = namedQuery.getSingleResult();
+			rs = namedQuery.getResultList();
 		} catch (NoResultException e) {
 			return false;
 		}
-		if(rs == null) {
+		if(rs.size() == 0 || rs == null) {
 			return false;
 		}else {
 			return true;

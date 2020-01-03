@@ -150,6 +150,8 @@
                     </li>
                     <li><a href="panel-page-profile.html"><i class="icon icon-user"></i>User Profile </a>
                     </li>
+                    <li><a href="backupsdtco"><i class="icon icon-circle-o"></i>Tin cá nhân</a>
+                    </li>
                 </ul>
             </li>
             <li class="treeview no-b"><a href="#">

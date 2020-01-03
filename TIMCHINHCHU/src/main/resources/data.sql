@@ -38,6 +38,24 @@ CREATE TABLE SDT_CO (
  
 );
 */
+
+insert into NHA_DAT (id,account_name, address, area_name, body, catalogy_name, date_upload, date_upload_convert, direction, list_id, list_time, owner, phone, price, price_string, property_legal_document, property_road_condition, region,region_name, rooms, sobaidang, songay, subject, subject_lowercase, type_name, ward_name)
+		values (100,'Chị Hằng','Đường Phạm Văn Đồng','Quận Bắc Từ Liêm','_Diện tích: 86m2','Căn hộ/Chung cư','1 phút trước',now(),'Tây Bắc','100',now(),'FALSE','0919222700','2200000','2200000','Đã có sổ đỏ/sổ hồng','','13','Tp Hồ Chí Minh',0,0,0,'Còn 1 fòng cho thuê, lầu 3','còn 1 fòng cho thuê, lầu 3','Cần bán','Phường Cổ Nhuế 2');
+
+
+insert into NHA_DAT (id,account_name, address, area_name, body, catalogy_name, date_upload, date_upload_convert, direction, list_id, list_time, owner, phone, price, price_string, property_legal_document, property_road_condition, region,region_name, rooms, sobaidang, songay, subject, subject_lowercase, type_name, ward_name)
+		values (101,'Chị Hằng','Đường Phạm Văn Đồng','Quận Bắc Từ Liêm','_Diện tích: 86m2','Căn hộ/Chung cư','1 phút trước',now(),'Tây Bắc','101',now(),'FALSE','0919222700','2200000','2200000','Đã có sổ đỏ/sổ hồng','','13','Tp Hồ Chí Minh',0,0,0,'Còn 1 fòng cho thuê, lầu 3','còn 1 fòng cho thuê, lầu 3','Cần bán','Phường Cổ Nhuế 2');
+
+insert into NHA_DAT (id,account_name, address, area_name, body, catalogy_name, date_upload, date_upload_convert, direction, list_id, list_time, owner, phone, price, price_string, property_legal_document, property_road_condition, region,region_name, rooms, sobaidang, songay, subject, subject_lowercase, type_name, ward_name)
+		values (102,'Chị Hằng','Đường Phạm Văn Đồng','Quận Bắc Từ Liêm','_Diện tích: 86m2','Căn hộ/Chung cư','1 phút trước',now(),'Tây Bắc','102',now(),'FALSE','0919222700','2200000','2200000','Đã có sổ đỏ/sổ hồng','','13','Tp Hồ Chí Minh',0,0,0,'Còn 1 fòng cho thuê, lầu 3','còn 1 fòng cho thuê, lầu 3','Cần bán','Phường Cổ Nhuế 2');
+
+insert into NHA_DAT (id,account_name, address, area_name, body, catalogy_name, date_upload, date_upload_convert, direction, list_id, list_time, owner, phone, price, price_string, property_legal_document, property_road_condition, region,region_name, rooms, sobaidang, songay, subject, subject_lowercase, type_name, ward_name)
+		values (103,'Chị Hằng','Đường Phạm Văn Đồng','Quận Bắc Từ Liêm','_Diện tích: 86m2','Căn hộ/Chung cư','1 phút trước',now(),'Tây Bắc','103',now(),'FALSE','0919222700','2200000','2200000','Đã có sổ đỏ/sổ hồng','','13','Tp Hồ Chí Minh',0,0,0,'Còn 1 fòng cho thuê, lầu 3','còn 1 fòng cho thuê, lầu 3','Cần bán','Phường Cổ Nhuế 2');
+		
+insert into NHA_DAT (id,account_name, address, area_name, body, catalogy_name, date_upload, date_upload_convert, direction, list_id, list_time, owner, phone, price, price_string, property_legal_document, property_road_condition, region,region_name, rooms, sobaidang, songay, subject, subject_lowercase, type_name, ward_name)
+		values (104,'Chị Hằng','Đường Phạm Văn Đồng','Quận Bắc Từ Liêm','_Diện tích: 86m2','Căn hộ/Chung cư','1 phút trước',now(),'Tây Bắc','104',now(),'FALSE','0919222700','2200000','2200000','Đã có sổ đỏ/sổ hồng','','13','Tp Hồ Chí Minh',0,0,0,'Còn 1 fòng cho thuê, lầu 3','còn 1 fòng cho thuê, lầu 3','Cần bán','Phường Cổ Nhuế 2');
+
+
   insert into role (role_id, name)
 	values (1, 'ROLE_ADMIN');
 	 

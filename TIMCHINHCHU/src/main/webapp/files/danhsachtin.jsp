@@ -165,6 +165,7 @@ $(document).ready(function() {
 				            <div class="col-md-6 col-example">
 				            		<h2 style = "font-style: bold" id="pricestring"></h2>
 						      		<h5 id="accountname"></h5>
+						      		<h5 id="phone"></h5>
 						      		<h5 id="ngay"></h5>
 				            </div>
 				            <div class="col-md-6 ml-auto col-example">
@@ -197,6 +198,10 @@ $(document).ready(function() {
                 <div class="modal-footer">
                  	<a class="btn btn-danger btn-ok" style="padding: 6px 10px;">Môi giới</a>
                  	<button type="button" class="btn btn-default" data-dismiss="modal">
+                 	<a href="tincanhan">Lưu vào tin cá nhân</a>
+                    	
+                    </button>
+                 	<button type="button" class="btn btn-default" data-dismiss="modal">
                     	Đóng
                     </button>
                 </div>
@@ -215,6 +220,7 @@ $(document).ready(function() {
 	    $("#accountname").text("Người đăng : " + triggerLink.data("accountname"));
 	    $("#body").text("Thông tin : " + triggerLink.data("body"));
 	    $("#ngay").text("Ngày đăng : " + triggerLink.data("ngay"));
+	    $("#phone").text("Số điện thoại : " + triggerLink.data("phone"));
 	    var phaply = triggerLink.data("legal");
 		if(triggerLink.data("legal") == null){
 			phaply = "Chưa biết";
@@ -815,7 +821,7 @@ $(document).ready(function() {
             <div class="row">
                 <ul class="nav responsive-tab nav-material nav-material-white">
                     <li>
-                        <a class="nav-link active" href="panel-page-products.html"><i class="icon icon-list"></i>Danh sách tin : ${regionName}</a>
+                        <a class="nav-link active" href="#"><i class="icon icon-list"></i>Danh sách tin : ${regionName}</a>
                     </li>
                 </ul>
             </div>
@@ -903,7 +909,7 @@ $(document).ready(function() {
 	                                <div>
 	                                	<input type="hidden" name="tinhthanhpho" value="${regionName}" />
 	                                    <button type="submit" class="btn btn-danger wrn-btn">
-		                            <i class="fas fa-key" aria-hidden="true"></i>
+		                            <i class="fas fa-search" aria-hidden="true"></i>
 		                            Tìm kiếm
 		                            
 		                            </button>

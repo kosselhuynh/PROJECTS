@@ -196,7 +196,7 @@ public class NhatDatRestController {
 		logger.info("=== START calAVG_TanSuat_ofSDTCO() ==== ");
 		// SDT dang qua 10 bai / ngay, SDT nam trong bang TAN SUAT
 		List<TanSuat> listSDT_more10Post_inTanSuat = tanSuatService.findAll_Where_more10Post();
-		logger.info("listSDT_more10Post_inTanSuat.size() :" + listSDT_more10Post_inTanSuat.size());
+		logger.info("---So luong cac tin nha dat co Tan Suat > 10 :" + listSDT_more10Post_inTanSuat.size());
 		// Them vao bang SDTCO
 		List<SDTCO> listSDTCO10Post = new ArrayList<>();
 		if(listSDT_more10Post_inTanSuat.size() > 0) {
@@ -260,7 +260,7 @@ public class NhatDatRestController {
 		List<SDTCO> listSDTCO = sdtCOService.findAll();
 		logger.info("listSDTCO chuan bi de xoa trong bang NHA DAT:" + listSDTCO.size());
 		if(listSDTCO.size() > 0) {
-			logger.info("So luong record Nha Dat ban dau " + nhaDatService.findAll().size());
+		//	logger.info("--== SO LUONG RECORD ND BAN DAU =  " + nhaDatService.findAll().size());
 			//xoa trong bang NHA DAT
 			//Tim sdt co ton tai trong bang NHA DAT K, roi xoa
 			for (SDTCO sdtco : listSDTCO) {
@@ -272,7 +272,7 @@ public class NhatDatRestController {
 				}
 			}
 		
-			logger.info("So luong record Nha Dat sau khi xoa " + nhaDatService.findAll().size());
+		//	logger.info("-== SO LUONG RECORD ND SAU KHI XOA = " + nhaDatService.findAll().size());
 		}
 		logger.info("=== END calAVG_TanSuat_ofSDTCO() ==== ");
 		
@@ -384,7 +384,6 @@ public class NhatDatRestController {
 					"So dien thoai chua ton tai trong bang NHA DAT ALL  ==> Kiem tra SDT de them vao bang TAN SUAT : "
 							+ nd.getPhone());
 			logger.info("So dien thoai chua ton tai trong bang SDTCO ==> Them moi");
-			logger.info("sdtCOService.findOneWithPhone(adParameter.getAd().getPhone()) : " + false);
 			logger.info("nhaDatService.insert(nd); : " + nd.getPhone());
 		} else {
 			logger.info("Da ton tai So dien thoai trong bang SDTCO ==> Khong them moi");
@@ -432,7 +431,6 @@ public class NhatDatRestController {
 			
 			nhaDatAllService.insert(nd);
 			logger.info("List ID chua ton tai trong bang NHADAT_ALL ==> Them moi");
-			logger.info("nhaDatAllService.findOne_where_ListID(chototAds.getList_id()) : " + false);
 			logger.info("nhaDatAllService.insert(nd); " + nd.getPhone());
 			// Data input à tần suất cò : đếm số lần xuất hiện trong tuần và tính ra tần
 			// suất. Mỗi ngày.
