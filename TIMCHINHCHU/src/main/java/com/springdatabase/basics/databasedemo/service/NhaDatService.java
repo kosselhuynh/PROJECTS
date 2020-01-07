@@ -203,6 +203,18 @@ public class NhaDatService {
 		return nhadatCount;
 	}
 
+	public NhaDat findOne_where_ID(int i) {
+		NhaDat result;
+		TypedQuery<NhaDat> namedQuery;
+		try {
+			namedQuery = entityManager.createQuery("Select nd from NhaDat nd where nd.id = "+ i, NhaDat.class);
+			result = namedQuery.getSingleResult();
+		}catch (NoResultException e) {
+			return null;
+		}
+		return result;
+	}
+
 	
 
 

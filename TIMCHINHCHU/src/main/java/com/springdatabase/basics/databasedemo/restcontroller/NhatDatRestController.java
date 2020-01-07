@@ -72,29 +72,29 @@ public class NhatDatRestController {
 		// Read from db
 		
 		//TAM BO VI NANG WEB
-		if (StringUtils.equals(tinhthanhpho, "Toàn quốc") && StringUtils.equals(quanhuyen, "Chọn quận huyện ...")
+		if (StringUtils.equals(quanhuyen, "Chọn quận huyện ...")
 				&& StringUtils.equals(loai, "Chọn loại ...") && StringUtils.isBlank(tutimkiem)) {
 			// Find All 100 Top new
 			listSortNhaDat = nhaDatService.findAll_where_Top100();
 		//	return listSortNhaDat;
 		}
-		if (!StringUtils.equals(tinhthanhpho, "Toàn quốc") 
-				&& (StringUtils.equals(quanhuyen, "Chọn quận huyện ...") || StringUtils.isBlank(quanhuyen))
+		if ((StringUtils.equals(quanhuyen, "Chọn quận huyện ...") || StringUtils.isBlank(quanhuyen))
 				&& (StringUtils.equals(loai, "Chọn loại ...") || StringUtils.isBlank(loai))
 				&& (StringUtils.isBlank(tutimkiem) || StringUtils.isBlank(tutimkiem))) {
 			// Find All 100 Top new where region_name = tinhthanhpho
 			listSortNhaDat = nhaDatService.findAll_where_Top100_With_RegionName(tinhthanhpho);
 		//	return listSortNhaDat;
 		}
-		if (!StringUtils.equals(tinhthanhpho, "Toàn quốc") && !StringUtils.equals(quanhuyen, "Chọn quận huyện ...")
+		if (!StringUtils.equals(quanhuyen, "Chọn quận huyện ...")
 				&& StringUtils.equals(loai, "Chọn loại ...") && StringUtils.isBlank(tutimkiem)) {
 			// Find All 100 Top new where region_name = tinhthanhpho and area_name =
 			// quanhuyen
 			listSortNhaDat = nhaDatService.findAll_where_Top100_With_RegionNameAreaName(tinhthanhpho, quanhuyen);
 		//	return listSortNhaDat;
 		}
-		if (!StringUtils.equals(tinhthanhpho, "Toàn quốc") && !StringUtils.equals(quanhuyen, "Chọn quận huyện ...")
-				&& !StringUtils.equals(loai, "Chọn loại ...") && StringUtils.isBlank(tutimkiem)) {
+		if ((!StringUtils.equals(quanhuyen, "Chọn quận huyện ...") || !StringUtils.isBlank(quanhuyen))
+				&& (!StringUtils.equals(loai, "Chọn loại ...") || !StringUtils.isBlank(loai))
+				&& StringUtils.isBlank(tutimkiem)) {
 			// Find All 100 Top new where region_name = tinhthanhpho and area_name =
 			// quanhuyen and TypeName = chuyenmuc
 			//Xu ly loai
@@ -119,7 +119,7 @@ public class NhatDatRestController {
 			}
 		}
 		
-		if (!StringUtils.equals(tinhthanhpho, "Toàn quốc") && !StringUtils.equals(quanhuyen, "Chọn quận huyện ...")
+		if (!StringUtils.equals(quanhuyen, "Chọn quận huyện ...")
 				&& !StringUtils.equals(loai, "Chọn loại ...") && !StringUtils.isBlank(tutimkiem)) {
 			// Find All 100 Top new where region_name = tinhthanhpho and area_name =
 			// quanhuyen and TypeName = chuyenmuc
@@ -146,7 +146,7 @@ public class NhatDatRestController {
 
 		//	return listSortNhaDat;
 		} 
-		if (!StringUtils.equals(tinhthanhpho, "Toàn quốc") && StringUtils.equals(quanhuyen, "Chọn quận huyện ...")
+		if (StringUtils.equals(quanhuyen, "Chọn quận huyện ...")
 				&& !StringUtils.equals(loai, "Chọn loại ...") && StringUtils.isBlank(tutimkiem)) {
 			// Find All 100 Top new where region_name = tinhthanhpho and area_name =
 			// quanhuyen and TypeName = chuyenmuc

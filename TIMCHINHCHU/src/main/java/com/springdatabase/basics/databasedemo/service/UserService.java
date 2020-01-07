@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
+import com.springdatabase.basics.databasedemo.entity.NhaDat;
 import com.springdatabase.basics.databasedemo.entity.User;
 
 @Repository
@@ -51,5 +52,9 @@ public class UserService {
 		}else {
 			return false;
 		}
+	}
+	
+	public void updateUser(User user) {
+		entityManager.merge(user);
 	}
 }

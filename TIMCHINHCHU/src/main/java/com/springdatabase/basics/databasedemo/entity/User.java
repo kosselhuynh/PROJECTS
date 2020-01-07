@@ -1,11 +1,18 @@
 package com.springdatabase.basics.databasedemo.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
@@ -20,7 +27,7 @@ public class User {
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "user_id")
-    private int userId;
+    private int UserId;
 
 	@NotNull(message = "Name cannot be null from 2-30 character")
     @Size(min = 2, max = 30)
@@ -42,16 +49,27 @@ public class User {
     @JoinColumn(name = "role_id")
     private Role role;
 
-	public int getUserId() {
-		return userId;
+   	private String nhadats;
+	
+   	
+	public String getNhadats() {
+		return nhadats;
 	}
 
-	public void setUserId(int userId) {
-		this.userId = userId;
+	public void setNhadats(String nhadats) {
+		this.nhadats = nhadats;
 	}
 
 	public String getFullname() {
 		return fullname;
+	}
+
+	public int getUserId() {
+		return UserId;
+	}
+
+	public void setUserId(int userId) {
+		UserId = userId;
 	}
 
 	public void setFullname(String fullname) {
@@ -104,7 +122,7 @@ public class User {
 	}
 	public User(int userId, String fullname, String email, String password, String confirmPassword, Role role) {
 		super();
-		this.userId = userId;
+		this.UserId = userId;
 		this.fullname = fullname;
 		this.email = email;
 		this.password = password;

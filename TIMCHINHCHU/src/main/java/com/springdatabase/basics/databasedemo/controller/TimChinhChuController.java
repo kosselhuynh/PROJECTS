@@ -36,12 +36,14 @@ import com.springdatabase.basics.databasedemo.entity.Files;
 import com.springdatabase.basics.databasedemo.entity.NhaDat;
 import com.springdatabase.basics.databasedemo.entity.SDTCO;
 import com.springdatabase.basics.databasedemo.entity.TanSuat;
+import com.springdatabase.basics.databasedemo.entity.User;
 import com.springdatabase.basics.databasedemo.restcontroller.NhatDatRestController;
 import com.springdatabase.basics.databasedemo.service.FilesService;
 import com.springdatabase.basics.databasedemo.service.NhaDatService;
 import com.springdatabase.basics.databasedemo.service.SDTCOService;
 import com.springdatabase.basics.databasedemo.service.TanSuatService;
 import com.springdatabase.basics.databasedemo.service.TrendingService;
+import com.springdatabase.basics.databasedemo.service.UserService;
 
 @Controller
 public class TimChinhChuController {
@@ -57,7 +59,8 @@ public class TimChinhChuController {
 	SDTCOService sdtCOService;
 	@Autowired
 	TanSuatService tanSuatService;
-	
+	@Autowired
+	UserService userService;
 	@Autowired
 	NhaDatService nhadatService;
 	public static Map<Integer,String> tinhTP = new LinkedHashMap<Integer,String>();
@@ -68,8 +71,6 @@ public class TimChinhChuController {
 		model.addAttribute("sotinhochiminh", nhadatService.count_Where_RegionName("Tp Hồ Chí Minh"));
 		model.addAttribute("sotinhanoi", nhadatService.count_Where_RegionName("Hà Nội"));
 		model.addAttribute("sotindanang", nhadatService.count_Where_RegionName("Đà Nẵng"));
-		
-		
 
 		return "index";
 	}
@@ -105,7 +106,7 @@ public class TimChinhChuController {
 		Utils.createtinhTP(tinhTP);
 		model.addAttribute("tinhTP", tinhTP);
 		model.addAttribute("regionName", Utils.tphochiminh);
-		model.addAttribute("listAreaName", Utils.createWardName(arrayNhaDat));//Chọn quận huyện ...
+		model.addAttribute("listAreaName", Utils.createQuanHuyenTPHCM());
 		model.addAttribute("quanhuyen", "Chọn quận huyện ...");
 		model.addAttribute("loai", "Chọn loại ...");
 		return "danhsachtin";
@@ -159,10 +160,16 @@ public class TimChinhChuController {
 	}
 
 	@GetMapping("{i}")
-	public String catalogy(@PathVariable("i") int i, Model model, HttpServletRequest request) {
+	public String catalogy(@PathVariable("i") int i, Model model, HttpServletRequest request) {//regionName
 		if(i < 100) {
 			List<NhaDat> arrayNhaDat = new ArrayList<NhaDat>();
 			arrayNhaDat = nhadatService.findAll_With_RegionName(tinhTP.get(i));
+			
+			NhaDat nd = nhadatService.findOne_where_ID(i);
+			model.addAttribute("quanhuyen", "Chọn quận huyện ...");
+			model.addAttribute("loai", "Chọn loại ...");
+	//		User user = new User();
+	//		userService.updateUser(user );
 			//Loai nha dat gom 4 loai : Can mua, can ban, can thue, cho thue
 			List<NhaDat> arrayNhatDat_CanBan = new ArrayList<NhaDat>();
 			List<NhaDat> arrayNhatDat_CanMua = new ArrayList<NhaDat>();
@@ -197,7 +204,6 @@ public class TimChinhChuController {
 			sdtCo.setPhone("0" + String.valueOf(i));
 			sdtCo.setPhanTram(100);
 			sdtCOService.insert(sdtCo );
-		//	return "redirect:timchinhchu";
 		}
 		model.addAttribute("khuvuc", tinhTP.get(i));
 		model.addAttribute("tongsotin", nhadatService.count_All());
@@ -254,7 +260,12 @@ public class TimChinhChuController {
 		return "danhsachtin";
 	}
 	
-
+	@GetMapping("profile")
+	public String userProfile() {
+		
+		return "profile";
+	}
+	
 	
 	@RequestMapping(value = "backupsdtco", method = RequestMethod.GET)
 	public ResponseEntity<InputStreamResource> backupsdtco(HttpServletRequest request) throws IOException{

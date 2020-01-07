@@ -190,6 +190,37 @@ public class Utils {
 		return listTypeName;
 	}
 //Tao mang
+	public static List<String> createQuanHuyenTPHCM() {
+		List<String> quanhuyen = new ArrayList<String>();
+		quanhuyen.add("Quận 1");
+		quanhuyen.add("Quận 2");
+		quanhuyen.add("Quận 3");
+		quanhuyen.add("Quận 4");
+		quanhuyen.add("Quận 5");
+		quanhuyen.add("Quận 6");
+		quanhuyen.add("Quận 7");
+		quanhuyen.add("Quận 8");
+		quanhuyen.add("Quận 9");
+		quanhuyen.add("Quận 10");
+		quanhuyen.add("Quận 11");
+		quanhuyen.add("Quận 12");
+		
+		quanhuyen.add("Quận Bình Tân");
+		quanhuyen.add("Quận Bình Thạnh");
+		quanhuyen.add("Quận Gò Vấp");
+		quanhuyen.add("Quận Phú Nhuận");
+		quanhuyen.add("Quận Tân Bình");
+		quanhuyen.add("Quận Tân Phú");
+		quanhuyen.add("Quận Thủ Đức");
+		
+		
+		quanhuyen.add("Huyện Bình Chánh");
+		quanhuyen.add("Huyện Củ Chi");
+		quanhuyen.add("Huyện Hóc Môn");
+		quanhuyen.add("Huyện Nhà Bè");
+		
+		return quanhuyen;
+	}
 	public static void createtinhTP(Map<Integer, String> tinhTP) {
 		tinhTP.put(1, "Tp Hồ Chí Minh");
 		tinhTP.put(2, "Hà Nội");
